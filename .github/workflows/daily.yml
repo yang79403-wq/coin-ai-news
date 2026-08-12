@@ -35,10 +35,13 @@ jobs:
       - name: 添加中英文模式与联系地址
         run: python i18n.py
 
+      - name: 注入免费鉴定入口
+        run: python appraisal.py
+
       - name: 自动提交更新
         run: |
           git config --global user.name "币智通AI"
           git config --global user.email "actions@github.com"
-          git add index.html news.py services.py i18n.py .github/workflows/daily.yml
-          git diff --cached --quiet || git commit -m "升级中英文模式与联系地址"
+          git add index.html news.py services.py i18n.py appraisal.py appraisal.html .github/workflows/daily.yml
+          git diff --cached --quiet || git commit -m "新增免费钱币鉴定入口"
           git push
