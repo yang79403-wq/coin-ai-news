@@ -1,0 +1,1 @@
+Page({data:{images:[]},chooseImage(){wx.chooseMedia({count:9,mediaType:['image'],sourceType:['album','camera'],success:r=>this.setData({images:r.tempFiles.map(x=>x.tempFilePath)})})},chooseVideo(){wx.chooseMedia({count:1,mediaType:['video'],sourceType:['album','camera'],success:r=>wx.showToast({title:'已选择视频',icon:'success'})})}})
