@@ -38,10 +38,13 @@ jobs:
       - name: 注入免费鉴定入口
         run: python appraisal.py
 
+      - name: 优化首页突出免费服务与资讯
+        run: python homepage_design.py
+
       - name: 自动提交更新
         run: |
           git config --global user.name "币智通AI"
           git config --global user.email "actions@github.com"
-          git add index.html news.py services.py i18n.py appraisal.py appraisal.html .github/workflows/daily.yml
-          git diff --cached --quiet || git commit -m "新增免费钱币鉴定入口"
+          git add index.html news.py services.py i18n.py appraisal.py appraisal.html homepage_design.py .github/workflows/daily.yml
+          git diff --cached --quiet || git commit -m "优化首页突出免费服务与资讯"
           git push
