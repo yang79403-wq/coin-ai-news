@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
 
       - name: 安装公开资讯采集依赖
-        run: pip install feedparser requests
+        run: pip install feedparser requests Pillow
 
       - name: 镜像真实钱币图片到本站
         run: python mirror_coin_images.py
