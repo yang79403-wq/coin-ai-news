@@ -1,0 +1,78 @@
+{
+  "updated_at_utc": "2026-08-12T16:40:53Z",
+  "notice": "Public Wikimedia Commons reference images mirrored for GitHub Pages. Check each original file page for current license/attribution requirements before reuse outside this site.",
+  "images": [
+    {
+      "id": "yuan-3-obverse",
+      "filename": "yuan-3-obverse.jpg",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Yuan_Shikai_Dollar_Year_3_Obverse.jpg",
+      "wikimedia_file": "Yuan Shikai Dollar Year 3 Obverse.jpg",
+      "title": "Yuan Shikai Dollar, Year 3, obverse",
+      "label": "袁大头",
+      "local": "assets/coins/yuan-3-obverse.jpg",
+      "mirrored": true,
+      "fallback_used": false,
+      "error": null
+    },
+    {
+      "id": "cash-coins",
+      "filename": "cash-coins-a.jpg",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Chinese_cash_coins_a.jpg",
+      "wikimedia_file": "Chinese cash coins a.jpg",
+      "title": "Chinese cash coins",
+      "label": "古钱币",
+      "local": "assets/coins/cash-coins-a.jpg",
+      "mirrored": true,
+      "fallback_used": false,
+      "error": null
+    },
+    {
+      "id": "rmb1-100",
+      "filename": "rmb1-100-1b.jpg",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/RMB1-100-1B.jpg",
+      "wikimedia_file": "RMB1-100-1B.jpg",
+      "title": "RMB 1st series, 100 yuan specimen",
+      "label": "老纸币",
+      "local": "assets/coins/rmb1-100-1b.jpg",
+      "mirrored": true,
+      "fallback_used": false,
+      "error": null
+    },
+    {
+      "id": "panda-2016",
+      "filename": "panda-2016-reverse.png",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/China_Panda_Goldmünze_2016_Rückseite.png",
+      "wikimedia_file": "China Panda Goldmünze 2016 Rückseite.png",
+      "title": "China Panda Gold Coin 2016 reverse",
+      "label": "熊猫金币",
+      "local": "assets/coins/panda-2016-reverse.png",
+      "mirrored": true,
+      "fallback_used": false,
+      "error": null
+    },
+    {
+      "id": "founding-commemorative",
+      "filename": "founding-commemorative.jpg",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/中华民国开国纪念币一圆硬币 正面.jpg",
+      "wikimedia_file": "中华民国开国纪念币一圆硬币 正面.jpg",
+      "title": "Republic of China Founding Commemorative Dollar",
+      "label": "开国纪念币",
+      "local": "assets/coins/founding-commemorative.jpg",
+      "mirrored": true,
+      "fallback_used": false,
+      "error": null
+    },
+    {
+      "id": "yuan-mechanism-reference",
+      "filename": "yuan-1921-iii.png",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Yuan_Shikai_Dollar_Year_3_Obverse.png",
+      "wikimedia_file": "Yuan Shikai Dollar Year 3 Obverse.png",
+      "title": "Yuan Shikai silver dollar reference",
+      "label": "机制银币",
+      "local": "assets/coins/yuan-1921-iii.png",
+      "mirrored": true,
+      "fallback_used": false,
+      "error": null
+    }
+  ]
+}
