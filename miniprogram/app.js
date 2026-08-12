@@ -1,0 +1,1 @@
+App({globalData:{phone:'13799875350',address:'福建省泉州市后城旅游文化街179号',lang:'zh-CN'}})
