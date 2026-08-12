@@ -1,28 +1,73 @@
-from datetime import datetime
 import json
+import re
+from datetime import datetime, timezone
+from html import unescape
 from pathlib import Path
+
 import requests
+from bs4 import BeautifulSoup
 
-path = Path('market-data.json')
-data = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {"records": []}
-
-# 只访问公开网页，不绕过登录、验证码或反爬机制。
-checks = [
-    ('一尘网公开行情入口', 'http://www.pm001.net/index.asp?boardid=148'),
-    ('闲鱼公开搜索入口', 'https://www.goofish.com/'),
+# 仅允许这三个公开来源。前台不显示来源名称。
+SOURCES = [
+    {"provider_id":"source_a","url":"https://www.xx007.com/","keywords":["钱币","银元","纸币","纪念币","金银币"]},
+    {"provider_id":"source_b","url":"https://www.coinsky.com/","keywords":["钱币","银元","纸币","纪念币","金币"]},
+    {"provider_id":"source_c","url":"https://www.chcoin.com/","keywords":["钱币","古钱","银元","机制币","评级币"]},
 ]
-access = []
-for name, url in checks:
-    try:
-        r = requests.get(url, timeout=12, headers={'User-Agent':'Mozilla/5.0 (compatible; CoinAI-News/1.0)'})
-        access.append({'name': name, 'url': url, 'status_code': r.status_code, 'accessible': r.ok})
-    except Exception as exc:
-        access.append({'name': name, 'url': url, 'accessible': False, 'error': str(exc)[:160]})
+HEADERS={"User-Agent":"Mozilla/5.0 (compatible; CoinAI-News/1.0)"}
+TIMEOUT=20
 
-data['updated_at'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-data['access_check'] = access
-data['notice'] = '仅采集公开网页；一尘/闲鱼若要求登录、动态渲染或触发反爬，则不强行绕过。未直接核验的成交价标记为公开报道参考。'
-path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
-print('行情数据更新时间：', data['updated_at'])
-for item in access:
-    print(item)
+def clean(s):
+    return " ".join(unescape(str(s or "")).split())
+
+def extract_price(text):
+    text=clean(text).replace(",","")
+    for p in [r"(?:¥|￥)\s*(\d+(?:\.\d+)?)",r"(?:成交|价格|价|售价|落槌)\s*[:：]?\s*(\d+(?:\.\d+)?)\s*元?"]:
+        m=re.search(p,text,re.I)
+        if m:
+            v=float(m.group(1))
+            if 0<v<100000000:return v
+    return None
+
+def parse(html, source):
+    soup=BeautifulSoup(html,"html.parser")
+    out=[];seen=set()
+    for node in soup.find_all(["tr","li","article","div"],limit=4000):
+        text=clean(node.get_text(" ",strip=True))
+        if len(text)<5 or len(text)>500 or not any(k in text for k in source["keywords"]): continue
+        price=extract_price(text)
+        if price is None: continue
+        heading=node.find(["a","h1","h2","h3","h4","strong"])
+        title=clean(heading.get_text(" ",strip=True) if heading else text[:100])
+        title=re.sub(r"(?:¥|￥)\s*\d+(?:\.\d+)?","",title).strip(" -|：:")
+        key=(title,price)
+        if len(title)<2 or key in seen: continue
+        seen.add(key)
+        out.append({"name":title[:100],"price":price,"date":datetime.now().astimezone().strftime("%Y-%m-%d"),"provider_id":source["provider_id"],"type":"公开成交/报价线索"})
+        if len(out)>=30: break
+    return out
+
+rows=[];status=[]
+for source in SOURCES:
+    try:
+        r=requests.get(source["url"],headers=HEADERS,timeout=TIMEOUT,allow_redirects=True)
+        r.raise_for_status()
+        got=parse(r.text,source);rows.extend(got)
+        status.append({"provider_id":source["provider_id"],"ok":True,"rows":len(got),"http":r.status_code})
+    except Exception as exc:
+        status.append({"provider_id":source["provider_id"],"ok":False,"rows":0,"error":str(exc)[:160]})
+
+unique={(r["name"],r["price"]):r for r in rows}
+rows=list(unique.values())[:80]
+payload={"updated_at":datetime.now(timezone.utc).astimezone().isoformat(),"scope":"公开市场成交/报价线索，仅作收藏研究参考","rows":rows,"status":status}
+Path("market-data.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
+
+# 在首页注入数据渲染器：只显示统一的“公开成交/报价线索”，不显示来源网站名称。
+index=Path("index.html")
+if index.exists():
+    html=index.read_text(encoding="utf-8")
+    script=r'''<script id="coin-ai-market-script">(function(){function e(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}function render(d){var rows=d.rows||[],body=rows.length?rows.slice(0,40).map(function(r){return '<tr><td>'+e(r.name)+'</td><td><strong>¥'+Number(r.price).toLocaleString('zh-CN')+'</strong></td><td>'+e(r.date||'')+'</td><td>公开成交/报价线索</td></tr>'}).join(''):'<tr><td colspan="4" style="text-align:center;color:#999">今日暂未采集到可确认的公开价格线索，下一次任务自动重试。</td></tr>';var box='<section class="market-live"><div class="table-box"><h3>📊 今日成交价格参考</h3><div style="color:#8b8179;font-size:12px;margin-bottom:10px">AI自动整理公开市场线索 · 更新时间 '+e(d.updated_at||'')+'</div><table class="price-table"><thead><tr><th>钱币品种</th><th>价格</th><th>日期</th><th>数据性质</th></tr></thead><tbody>'+body+'</tbody></table><div style="font-size:11px;color:#8b8179;line-height:1.7;margin-top:10px">价格受真伪、版别、品相、评级、交易条件等影响；本表仅作市场研究参考，不构成报价或交易承诺。</div></div></section>';var m=document.getElementById('market');if(m)m.innerHTML=box;else{var a=document.getElementById('coins')||document.querySelector('main');if(a)a.insertAdjacentHTML('afterend',box)}}fetch('market-data.json?'+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(render).catch(function(){render({rows:[],updated_at:'暂未更新'})});document.querySelectorAll('.nmeta').forEach(function(m){var s=m.querySelectorAll('span');for(var i=1;i<s.length;i++)s[i].remove()})})();</script>'''
+    html=re.sub(r'<script id="coin-ai-market-script">.*?</script>','',html,flags=re.S)
+    if '</body>' in html: html=html.replace('</body>',script+'\n</body>',1)
+    index.write_text(html,encoding='utf-8')
+
+print('市场数据更新完成：',len(rows))
