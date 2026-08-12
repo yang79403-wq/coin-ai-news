@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-"""Mirror public coin reference images into this repository for GitHub Pages.
-
-The source files are public Wikimedia Commons media. The script keeps source URLs
-and attribution metadata beside the mirrored files and never bypasses login,
-CAPTCHA, robots controls, or other access restrictions.
-"""
+"""Mirror public coin reference images into this repository for GitHub Pages."""
 from pathlib import Path
 import json
 import time
+from urllib.parse import quote
 import requests
 
 ROOT = Path(__file__).resolve().parent
@@ -15,35 +11,54 @@ OUT = ROOT / "assets" / "coins"
 OUT.mkdir(parents=True, exist_ok=True)
 
 COINS = [
-    {"id":"yuan-3-obverse","filename":"yuan-3-obverse.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Yuan_Shikai_Dollar_Year_3_Obverse.jpg","title":"Yuan Shikai Dollar, Year 3, obverse","label":"袁大头"},
-    {"id":"cash-coins","filename":"cash-coins-a.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Chinese_cash_coins_a.jpg","title":"Chinese cash coins","label":"古钱币"},
-    {"id":"rmb1-100","filename":"rmb1-100-1b.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/RMB1-100-1B.jpg","title":"RMB 1st series, 100 yuan specimen","label":"老纸币"},
-    {"id":"panda-2016","filename":"panda-2016-reverse.png","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/China_Panda_Goldmünze_2016_Rückseite.png","title":"China Panda Gold Coin 2016 reverse","label":"熊猫金币"},
-    {"id":"founding-commemorative","filename":"founding-commemorative.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/中华民国开国纪念币一圆硬币 正面.jpg","title":"Republic of China Founding Commemorative Dollar","label":"开国纪念币"},
-    {"id":"yuan-1921","filename":"yuan-1921-iii.png","source":"https://commons.wikimedia.org/wiki/Special:FilePath/1_dollar_Yuan_Shikai_1921_-_III.png","title":"Yuan Shikai Dollar 1921","label":"机制银币"},
+    {"id":"yuan-3-obverse","filename":"yuan-3-obverse.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Yuan_Shikai_Dollar_Year_3_Obverse.jpg","wikimedia_file":"Yuan Shikai Dollar Year 3 Obverse.jpg","title":"Yuan Shikai Dollar, Year 3, obverse","label":"袁大头"},
+    {"id":"cash-coins","filename":"cash-coins-a.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Chinese_cash_coins_a.jpg","wikimedia_file":"Chinese cash coins a.jpg","title":"Chinese cash coins","label":"古钱币"},
+    {"id":"rmb1-100","filename":"rmb1-100-1b.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/RMB1-100-1B.jpg","wikimedia_file":"RMB1-100-1B.jpg","title":"RMB 1st series, 100 yuan specimen","label":"老纸币"},
+    {"id":"panda-2016","filename":"panda-2016-reverse.png","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/China_Panda_Goldmünze_2016_Rückseite.png","wikimedia_file":"China Panda Goldmünze 2016 Rückseite.png","title":"China Panda Gold Coin 2016 reverse","label":"熊猫金币"},
+    {"id":"founding-commemorative","filename":"founding-commemorative.jpg","source":"https://commons.wikimedia.org/wiki/Special:Redirect/file/中华民国开国纪念币一圆硬币 正面.jpg","wikimedia_file":"中华民国开国纪念币一圆硬币 正面.jpg","title":"Republic of China Founding Commemorative Dollar","label":"开国纪念币"},
+    {"id":"yuan-1921","filename":"yuan-1921-iii.png","source":"https://commons.wikimedia.org/wiki/Special:FilePath/1_dollar_Yuan_Shikai_1921_-_III.png","wikimedia_file":"1 dollar Yuan Shikai 1921 - III.png","title":"Yuan Shikai Dollar 1921","label":"机制银币"},
 ]
 
 HEADERS = {"User-Agent":"CoinAI-News/1.0 (GitHub Actions; public image mirror)"}
 session = requests.Session()
 session.headers.update(HEADERS)
-results = []
 
+def resolve_wikimedia_url(filename: str) -> str:
+    api = "https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&format=json&titles=" + quote("File:" + filename)
+    data = session.get(api, timeout=30).json()
+    pages = data.get("query", {}).get("pages", {})
+    for page in pages.values():
+        info = page.get("imageinfo")
+        if info and info[0].get("url"):
+            return info[0]["url"]
+    raise RuntimeError(f"Wikimedia API could not resolve File:{filename}")
+
+results = []
 for item in COINS:
     target = OUT / item["filename"]
     ok = False
     error = None
-    for attempt in range(3):
-        try:
-            response = session.get(item["source"], timeout=30, allow_redirects=True)
-            response.raise_for_status()
-            if len(response.content) < 1000:
-                raise RuntimeError(f"response too small: {len(response.content)} bytes")
-            target.write_bytes(response.content)
-            ok = True
+    urls = [item["source"]]
+    try:
+        urls.append(resolve_wikimedia_url(item["wikimedia_file"]))
+    except Exception as exc:
+        print(f"API fallback unavailable for {item['label']}: {exc}")
+
+    for url in urls:
+        for attempt in range(3):
+            try:
+                response = session.get(url, timeout=30, allow_redirects=True)
+                response.raise_for_status()
+                if len(response.content) < 1000:
+                    raise RuntimeError(f"response too small: {len(response.content)} bytes")
+                target.write_bytes(response.content)
+                ok = True
+                break
+            except Exception as exc:  # noqa: BLE001
+                error = str(exc)
+                time.sleep(2 * (attempt + 1))
+        if ok:
             break
-        except Exception as exc:  # noqa: BLE001
-            error = str(exc)
-            time.sleep(2 * (attempt + 1))
     results.append({**item,"local":f"assets/coins/{item['filename']}","mirrored":ok,"error":error})
     print(f"{'OK' if ok else 'FAIL'} {item['label']}: {target}")
 
