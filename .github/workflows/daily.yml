@@ -1,0 +1,19 @@
+name: 币智通AI自动运行
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 启动币智通AI
+        run: |
+          echo "================================"
+          echo "🪙 币智通 AI"
+          echo "钱币资讯自动化系统"
+          echo "================================"
+          echo "机器人启动成功！"
+          echo "当前时间：$(date)"
+          echo "系统运行正常！"
