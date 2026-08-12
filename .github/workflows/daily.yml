@@ -1,6 +1,9 @@
 name: 币智通AI每日资讯
 
 on:
+  push:
+    paths-ignore:
+      - 'assets/coins/**'
   schedule:
     # GitHub Actions 使用 UTC；01:00 UTC = 北京时间 09:00
     - cron: '0 1 * * *'
@@ -25,16 +28,19 @@ jobs:
       - name: 安装公开资讯采集依赖
         run: pip install feedparser requests
 
+      - name: 镜像真实钱币图片到本站
+        run: python mirror_coin_images.py
+
       - name: AI每日资讯与头条数据
         run: python news_v2.py
 
       - name: 一尘与闲鱼公开网页接入检查
         run: python market_update.py
 
-      - name: 自动提交每日数据
+      - name: 自动提交每日数据与本地图片
         run: |
           git config --global user.name "币智通AI"
           git config --global user.email "actions@github.com"
-          git add news-data.json news.html market-data.json news_v2.py market_update.py index.html .github/workflows/daily.yml
-          git diff --cached --quiet || git commit -m "AI每日更新钱币资讯与公开行情数据"
+          git add -A
+          git diff --cached --quiet || git commit -m "AI每日更新资讯行情并镜像真币图片"
           git push
