@@ -33,7 +33,7 @@
 <!-- COIN_AI_SEARCH_V1 -->
 <section id="ai-search" class="section coin-ai-search" aria-label="币智通AI智能搜索">
   <h2>🤖 币智通 AI</h2>
-  <span class="ai-tag">像使用 GPT 一样提问：钱币、版别、行情、收藏知识都可以直接问</span>
+  <span class="ai-tag">智能理解问题：钱币、版别、行情、收藏知识都可以直接问</span>
   <div class="coin-ai-chat">
     <div id="coin-ai-messages" class="coin-ai-messages" aria-live="polite">
       <div class="coin-ai-msg assistant"><div class="coin-ai-avatar">🪙</div><div><div class="coin-ai-bubble">你好，我是币智通 AI。你可以直接问我：这枚钱币是什么？现在大概多少钱？版别怎么判断？最近市场怎么样？也可以上传钱币图片。</div><div class="coin-ai-meta">收藏研究助手 · 价格仅作市场参考</div></div></div>
@@ -49,7 +49,7 @@
       <input id="coin-ai-input" class="coin-ai-input" type="search" autocomplete="off" placeholder="直接问我，例如：袁大头三年多少钱？" aria-label="向币智通AI提问">
       <button class="coin-ai-send" type="submit">发送</button>
     </form>
-    <div id="coin-ai-status" class="coin-ai-status">🟡 AI接口待连接：当前保留网站资料检索；接入安全 AI API 后自动升级为多轮 GPT 式回答。</div>
+    <div id="coin-ai-status" class="coin-ai-status">🟡 智能接口待连接：当前使用网站资料检索；接入安全 AI 服务后自动升级为多轮智能回答。</div>
   </div>
   <div class="coin-ai-note">⚠️ AI鉴定结果仅作为收藏研究和价格参考，不作为法律意义上的鉴定结论。市场价格受品相、版别、来源及实时成交情况影响。</div>
 </section>
@@ -64,14 +64,14 @@
   function localAnswer(q){
     var terms=q.toLowerCase().split(/[^\u4e00-\u9fa5a-z0-9]+/).filter(Boolean), nodes=Array.prototype.slice.call(document.querySelectorAll('main h1,main h2,main h3,main p,main td,main li,.coin b,.coin small,.fact b,.fact p')), scored=nodes.map(function(n){var t=(n.textContent||'').trim(),l=t.toLowerCase(),score=terms.reduce(function(a,w){return a+(l.indexOf(w)>=0?1:0)},0);return {t:t,score:score}}).filter(function(x){return x.score>0}).sort(function(a,b){return b.score-a.score});
     var seen={},hits=[];scored.forEach(function(x){if(hits.length<5&&!seen[x.t]){seen[x.t]=1;hits.push(x.t)}});
-    return hits.length?'我先从币智通当前网页资料中找到这些相关内容：\n\n• '+hits.join('\n• ')+'\n\n如果你需要具体价格，我建议再提供：钱币名称、版别、品相和正反面图片。这样接入 AI 行情检索后，我可以进一步综合成交数据分析。':'当前网页资料中暂时没有直接匹配内容。你可以换成具体钱币名称、版别或上传图片继续问。';
+    return hits.length?'我先从币智通当前网页资料中找到这些相关内容：\n\n• '+hits.join('\n• ')+'\n\n如果你需要具体价格，我建议再提供：钱币名称、版别、品相和正反面图片。这样接入智能行情检索后，我可以进一步综合成交数据分析。':'当前网页资料中暂时没有直接匹配内容。你可以换成具体钱币名称、版别或上传图片继续问。';
   }
   function send(q,imageData){
     q=(q||'').trim(); if(!q&&!imageData)return;
     if(q)add('user',q); else add('user','[已上传钱币图片]');
     history.push({role:'user',content:q||'请分析我上传的钱币图片。'});
     status.textContent='🟠 AI正在理解问题并检索资料…';
-    if(!endpoint){setTimeout(function(){var a=localAnswer(q||'钱币图片');add('assistant',a);history.push({role:'assistant',content:a});status.textContent='🟡 当前为网站资料模式。配置安全 AI API 后启用多轮 GPT 式回答与图片理解。';},250);return;}
+    if(!endpoint){setTimeout(function(){var a=localAnswer(q||'钱币图片');add('assistant',a);history.push({role:'assistant',content:a});status.textContent='🟡 当前为网站资料模式。配置安全 AI 服务后启用多轮智能回答与图片理解。';},250);return;}
     fetch(endpoint.replace(/\/$/,'' )+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history, image:imageData||null})}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(function(d){var t=d&&d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content;if(!t)throw new Error('empty');add('assistant',t);history.push({role:'assistant',content:t});status.textContent='🟢 AI回答完成 · 可继续追问';}).catch(function(){var a=localAnswer(q||'钱币图片');add('assistant',a);history.push({role:'assistant',content:a});status.textContent='🟡 AI接口暂不可用，已自动切换网站资料模式。';});
   }
   form.addEventListener('submit',function(e){e.preventDefault();send(input.value);input.value='';});
