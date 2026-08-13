@@ -33,6 +33,25 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;b
 .table th{font-size:15px}.market{border-color:var(--hs-line)}.market .table tbody tr:hover{background:#fff7df}.price{font-family:Georgia,"Times New Roman",serif;letter-spacing:.5px}.contact{box-shadow:0 10px 28px rgba(50,0,0,.18)}.btn,.contact a{box-shadow:0 5px 14px rgba(70,10,0,.12)}.notice{border-left:4px solid var(--hs-gold)}footer{background:rgba(255,250,240,.5)}
 @media(max-width:520px){.hero{padding:30px 0 32px}.brand{font-size:45px!important;letter-spacing:3px!important}.title{font-size:25px!important}.hero p{font-size:13px}.nav a{font-size:14px}}
 </style>
+<style id="hongsheng-collection-search-css">
+.hs-search{max-width:1180px;margin:0 auto;padding:0 16px}
+.hs-search-box{background:linear-gradient(135deg,#fff8e8,#fffdf8);border:1px solid #c9a75c;border-radius:22px;padding:22px;box-shadow:0 12px 32px rgba(70,30,0,.08)}
+.hs-search-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.hs-search-title{font-family:"STKaiti","KaiTi","Songti SC","Noto Serif SC",serif;font-size:28px;font-weight:900;color:#650600;margin:0}
+.hs-search-sub{margin:5px 0 0;color:#75695f;font-size:13px;line-height:1.6}
+.hs-search-icon{font-size:34px;filter:drop-shadow(0 3px 5px rgba(70,20,0,.12))}
+.hs-search-form{display:flex;gap:9px;margin-top:12px}
+.hs-search-input{flex:1;min-width:0;border:1px solid #d8c39b;background:#fff;border-radius:13px;padding:13px 15px;font-size:15px;outline:none;color:#34261d}
+.hs-search-input:focus{border-color:#9d701d;box-shadow:0 0 0 3px rgba(185,138,53,.12)}
+.hs-search-submit{border:0;border-radius:13px;padding:0 20px;background:linear-gradient(135deg,#7d0b0b,#4a0302);color:#ffe5a0;font-weight:900;cursor:pointer}
+.hs-search-links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.hs-search-link{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;background:#fff;border:1px solid #e2d3b8;border-radius:15px;padding:14px 15px;color:#5c0905;transition:.2s}
+.hs-search-link:hover{transform:translateY(-2px);border-color:#b98a35;box-shadow:0 8px 20px rgba(70,30,0,.08)}
+.hs-search-link b{font-family:"STKaiti","KaiTi","Songti SC",serif;font-size:18px}.hs-search-link small{display:block;color:#81756b;margin-top:3px;font-size:11px}.hs-arrow{font-size:20px;color:#b98a35}
+.hs-search-results{display:none;margin-top:12px;padding:11px 13px;border-radius:12px;background:#fff7df;border:1px solid #ead5a4;color:#665441;font-size:12px;line-height:1.7}
+.hs-search-results.show{display:block}.hs-search-results strong{color:#650600}
+@media(max-width:560px){.hs-search-box{padding:17px}.hs-search-head{align-items:center}.hs-search-title{font-size:24px}.hs-search-form{display:grid;grid-template-columns:1fr}.hs-search-submit{padding:12px}.hs-search-links{grid-template-columns:1fr}.hs-search-icon{font-size:29px}}
+</style>
 </head><body>
 <div class="top">🪙 HONGSHENG COLLECTION · 福建钱币行业信息平台　|　每日自动收集 · 整理 · 分析 · 信息更新</div>
 <header class="hero"><div class="wrap hero-in"><div><div class="kicker">NUMISMATIC INTELLIGENCE · FUJIAN</div><div class="brand">洪盛集藏网</div><div class="sub">新时代信息集成，让收藏畅通无阻</div><div class="sub" style="margin-top:6px;font-size:12px;letter-spacing:2px">钱币资讯 · 市场行情 · 鉴定评估 · 收藏研究</div><p>平台每天自动收集、筛选、整理钱币行业公开信息，形成收藏趣闻、行业新闻、市场行情、成交价格与收藏知识。平台以信息服务为核心，免费鉴定、评估与价格分析为主要服务入口。</p><div class="cities"><span class="city">📍 福建泉州 · 当天上门评估鉴定</span><span class="city">📍 福建厦门 · 当天上门评估鉴定</span><span class="city">📍 福建福州 · 当天上门评估鉴定</span><span class="city">🚗 福建省内可预约上门</span></div></div><div class="hero-coin"><img src="assets/coins/cash-coins-a.jpg" alt="珍稀钱币"><span>珍稀钱币 · 每日收藏专题</span></div></div></header>
@@ -42,11 +61,53 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;b
 <section id="free" class="section"><div class="free"><div class="panel"><h3>🔎 免费鉴定 · 免费评估 · Free Consultation</h3><p>提供钱币正面、背面、边齿、细节照片或视频，AI进行初步识别、品种分析和市场参考，再结合人工复核。无交易不收费，隐私全程保密。</p><a class="btn" href="ai_appraisal.html">📷 开始免费鉴定</a></div><div class="panel"><h3>🤖 每日信息自动整理</h3><p>自动收集行业资讯、收藏趣闻、市场新闻、公开成交线索、贵金属行情与知识资料，进行去重、分类、摘要和趋势整理。</p><div class="notice">AI分析和价格仅作收藏研究参考，不替代实物专业鉴定，也不保证成交价格。</div></div></div></section>
 <section id="news" class="section"><h2 class="title">🔥 今日钱币头条 · Today’s Coin News</h2><p class="desc">每日整理行业新闻、市场大事、拍卖动态与收藏热点</p><div class="news-grid"><div class="news-main"><img src="assets/coins/cash-coins-a.jpg" alt="珍稀钱币头条"><div class="news-copy"><span>AI DAILY · 每日更新</span><h2 id="headlineTitle">珍稀钱币、收藏市场与行业动态</h2><p id="headlineText">平台正在整理今日钱币行业信息，自动生成摘要与重点观察。</p></div></div><div id="newsList" class="facts"><div class="fact"><b>📰 今日行业资讯</b><p>自动更新中</p></div><div class="fact"><b>📈 今日市场观察</b><p>AI整理公开市场线索</p></div><div class="fact"><b>🏆 今日收藏热点</b><p>关注稀少珍稀钱币与热门品种</p></div></div></div></section>
 <section id="facts" class="section"><h2 class="title">🪙 今日收藏趣闻 · Collecting Stories</h2><p class="desc">每天一个收藏知识、历史趣闻或钱币研究主题</p><div id="factsGrid" class="grid"><div class="fact"><b>AI每日收藏趣闻</b><p>正在自动更新收藏历史、钱币文化、版别知识与市场观察。</p></div></div></section>
-<section id="coins" class="section"><h2 class="title">🪙 真币图鉴 · Featured Coins</h2><p class="desc">古钱 · 银元 · 纸币 · 纪念币 · 纪念钞 · 金银币</p><div class="coinwall"><div class="coin"><img src="assets/coins/yuan-shikai.jpg"><b>银元</b><small>袁世凯像</small></div><div class="coin"><img src="assets/coins/ancient-coin.jpg"><b>古钱</b><small>古钱币</small></div><div class="coin"><img src="assets/coins/rmb1-100-1b.jpg"><b>纸币</b><small>老纸币</small></div><div class="coin"><img src="assets/coins/commemorative-coin.jpg"><b>纪念币</b><small>收藏研究</small></div><div class="coin"><img src="assets/coins/commemorative-note.jpg"><b>纪念钞</b><small>热门品种</small></div><div class="coin"><img src="assets/coins/panda-2016-reverse.png"><b>金银币</b><small>贵金属收藏</small></div></div></section>
+<section id="coins" class="section"><h2 class="title">🪙 真币图鉴 · Featured Coins</h2><p class="desc">古钱 · 银元 · 纸币 · 纪念币 · 纪念钞 · 金银币</p><div class="coinwall"><div class="coin"><img src="assets/coins/yuan-3-obverse.jpg"><b>银元</b><small>袁世凯像</small></div><div class="coin"><img src="assets/coins/cash-coins-a.jpg"><b>古钱</b><small>古钱币</small></div><div class="coin"><img src="assets/coins/rmb1-100-1b.jpg"><b>纸币</b><small>老纸币</small></div><div class="coin"><img src="assets/coins/founding-commemorative.jpg"><b>纪念币</b><small>收藏研究</small></div><div class="coin"><img src="assets/coins/rmb1-100-1b.jpg"><b>纪念钞</b><small>热门品种</small></div><div class="coin"><img src="assets/coins/panda-2016-reverse.png"><b>金银币</b><small>贵金属收藏</small></div></div></section>
 <section id="market" class="section"><h2 class="title">📊 AI 成交价格表 · Market Price</h2><p class="desc">古钱、银元、纸币、纪念币、纪念钞、金银币 · 有效成交样本优先</p><div class="market"><table class="table"><thead><tr><th>类别</th><th>品种</th><th>成交价格</th><th>样本</th><th>趋势</th><th>更新时间</th></tr></thead><tbody id="marketBody"><tr><td>🪙 银元</td><td>热门银元</td><td>AI自动更新</td><td>—</td><td>—</td><td>—</td></tr><tr><td>🏮 古钱</td><td>热门古钱</td><td>AI自动更新</td><td>—</td><td>—</td><td>—</td></tr><tr><td>💴 纸币</td><td>热门纸币</td><td>AI自动更新</td><td>—</td><td>—</td><td>—</td></tr><tr><td>🎖️ 纪念币</td><td>热门纪念币</td><td>AI自动更新</td><td>—</td><td>—</td><td>—</td></tr><tr><td>🎫 纪念钞</td><td>热门纪念钞</td><td>AI自动更新</td><td>—</td><td>—</td><td>—</td></tr><tr><td>🥇 金银币</td><td>热门金银币</td><td>AI自动更新</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div><div class="notice">成交价格、挂牌价格和 AI 估价分开显示；未经核验的报价不会冒充真实成交。</div></section>
 <section id="metals" class="section"><h2 class="title">🥇 黄金白银实时行情 · Gold & Silver</h2><p class="desc">自动行情接口参考 · 页面每15分钟尝试刷新一次</p><div class="metals"><div class="metal"><h3>🥇 GOLD · 黄金</h3><div id="goldPrice" class="price">加载中…</div><small id="goldTime">正在获取最新数据</small></div><div class="metal"><h3>🥈 SILVER · 白银</h3><div id="silverPrice" class="price">加载中…</div><small id="silverTime">正在获取最新数据</small></div></div><div class="notice">贵金属价格会持续波动；网站显示为行情接口参考值，不构成投资建议或交易报价。</div></section>
 <section id="service" class="section"><h2 class="title">🎁 行业信息 + 免费服务 · Services</h2><div class="services"><div class="svc">🔎<b>免费鉴定</b><span>照片 / 视频初步分析，人工复核。</span></div><div class="svc">💰<b>免费评估</b><span>结合品种、版别、品相和公开成交样本分析。</span></div><div class="svc">📈<b>市场分析</b><span>AI整理行情变化、热门品种与市场信息。</span></div><div class="svc">📚<b>收藏研究</b><span>历史、版别、评级、收藏趣闻每日更新。</span></div></div></section>
 <section class="section"><div class="address"><b>📍 服务地址</b><br>福建省泉州市后城旅游文化街179号<br><b>📞 电话 / 微信同号：13799875350</b><br>福建泉州、厦门、福州及福建省内可预约当天上门；具体安排以地点、交通和预约确认时间为准。全国其他地区可提前咨询安排。</div></section>
+<!-- HONGSHENG_COLLECTION_SEARCH -->
+<section class="section hs-search" id="collection-search">
+  <div class="hs-search-box">
+    <div class="hs-search-head">
+      <div>
+        <h2 class="hs-search-title">🔎 钱币信息查询</h2>
+        <p class="hs-search-sub">搜索钱币名称、年份、版别、银元、古钱、纸币等关键词，快速进入相关收藏信息来源。</p>
+      </div>
+      <div class="hs-search-icon">🪙</div>
+    </div>
+    <form class="hs-search-form" id="hs-search-form">
+      <input class="hs-search-input" id="hs-search-input" type="search" autocomplete="off" placeholder="例如：袁大头、康熙通宝、第一套人民币">
+      <button class="hs-search-submit" type="submit">查询</button>
+    </form>
+    <div class="hs-search-results" id="hs-search-results"></div>
+    <div class="hs-search-links">
+      <a class="hs-search-link" href="https://www.pm001.net/index.asp" target="_blank" rel="noopener noreferrer" data-source="一尘网">
+        <span><b>一尘网 · 交易信息</b><small>进入一尘网查询钱币交易、行情及收藏信息</small></span><span class="hs-arrow">→</span>
+      </a>
+      <a class="hs-search-link" href="https://www.yy11.com/htm/shop.cgi" target="_blank" rel="noopener noreferrer" data-source="钱币天堂">
+        <span><b>钱币天堂 · 钱币商城</b><small>进入钱币天堂查询商城、钱币及交易信息</small></span><span class="hs-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+<script id="hongsheng-collection-search-js">
+(function(){
+  const form=document.getElementById('hs-search-form');
+  const input=document.getElementById('hs-search-input');
+  const result=document.getElementById('hs-search-results');
+  if(!form||!input||!result)return;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    const q=input.value.trim();
+    if(!q){result.innerHTML='请输入钱币名称、年份或版别关键词后再查询。';result.classList.add('show');input.focus();return;}
+    try{if(navigator.clipboard)navigator.clipboard.writeText(q)}catch(_){ }
+    result.innerHTML='<strong>关键词：</strong>'+q+'<br>已准备查询。请选择下方 <strong>一尘网</strong> 或 <strong>钱币天堂</strong>，进入对应网站继续查询。关键词已尝试复制到剪贴板，可直接粘贴。';
+    result.classList.add('show');
+  });
+})();
+</script>
+
 </main><footer>洪盛集藏网 · Hongsheng Collection｜福建泉州 · 全国钱币行业信息服务平台<br>每日自动收集 · 整理 · 分析 · 信息更新　|　免费鉴定 · 免费评估 · 收藏研究<br>© 2026 Hongsheng Collection Numismatic Information Platform</footer>
 <script>
 async function loadJSON(p){try{const r=await fetch(p+'?t='+Date.now());if(!r.ok)throw 0;return await r.json()}catch(e){return null}}
@@ -69,10 +130,10 @@ loadMetals();loadNews();loadFacts();loadMarket();setInterval(loadMetals,900000);
 /* COIN-AI-MARKET-IMAGE-SCRIPT-START */
 (function(){
   const map={
-    '银元':'assets/coins/yuan-shikai.jpg','袁':'assets/coins/yuan-shikai.jpg',
-    '古钱':'assets/coins/ancient-coin.jpg','宝':'assets/coins/ancient-coin.jpg',
+    '银元':'assets/coins/yuan-3-obverse.jpg','袁':'assets/coins/yuan-3-obverse.jpg',
+    '古钱':'assets/coins/cash-coins-a.jpg','宝':'assets/coins/cash-coins-a.jpg',
     '纸币':'assets/coins/rmb1-100-1b.jpg','人民币':'assets/coins/rmb1-100-1b.jpg',
-    '纪念币':'assets/coins/commemorative-coin.jpg','纪念钞':'assets/coins/commemorative-note.jpg',
+    '纪念币':'assets/coins/founding-commemorative.jpg','纪念钞':'assets/coins/rmb1-100-1b.jpg',
     '金银币':'assets/coins/panda-2016-reverse.png','金币':'assets/coins/panda-2016-reverse.png','银币':'assets/coins/panda-2016-reverse.png'
   };
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
