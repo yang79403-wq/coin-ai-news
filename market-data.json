@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T08:55:48.115045+00:00",
+  "updated_at": "2026-08-13T15:27:28.750365+00:00",
   "scope": "公开市场成交/报价线索，仅作收藏研究参考",
   "categories": [
     "古钱",
@@ -11,95 +11,15 @@
   ],
   "rows": [
     {
-      "name": "拍卖中 云南光绪壹圆新龙",
-      "price": 1590.0,
+      "name": "拍卖中 百达翡丽金怀表",
+      "price": 19220.0,
       "date": "2026-08-13",
       "provider_id": "source_c",
       "type": "公开成交/报价线索",
       "category": "其他"
     },
     {
-      "name": "预展 咸丰通宝宝福一百评级币",
-      "price": 17820.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 嘉庆通宝宝泉大样母钱评级币",
-      "price": 8070.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 乾隆通宝宝泉母钱评级币",
-      "price": 3330.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 道光通宝宝源母钱评级币",
-      "price": 8490.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 咸丰重宝宝晋当十母钱评级币",
-      "price": 11220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 重和通宝隶书评级币",
-      "price": 15220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 咸丰元宝宝直当百评级币",
-      "price": 6600.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 近代机制光绪通宝评级币",
-      "price": 100.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "预展 宣统通宝宝泉大样母坯评级币",
-      "price": 16220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "珍品古钱币第209期钱币个人专场",
-      "price": 540.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "2 咸丰重宝宝泉当十铁母评级币  结拍：08-14 20:00",
+      "name": "拍卖中 咸丰重宝宝泉当十铁母评级币",
       "price": 29820.0,
       "date": "2026-08-13",
       "provider_id": "source_c",
@@ -107,15 +27,47 @@
       "category": "古钱"
     },
     {
-      "name": "7 咸丰通宝宝福一百评级币  结拍：08-14 20:00",
-      "price": 17820.0,
+      "name": "拍卖中 咸丰重宝宝晋当十母钱评级币",
+      "price": 11220.0,
       "date": "2026-08-13",
       "provider_id": "source_c",
       "type": "公开成交/报价线索",
       "category": "古钱"
     },
     {
-      "name": "10 宣统通宝宝泉大样母坯评级币  结拍：08-14 20:00",
+      "name": "拍卖中 重和通宝隶书评级币",
+      "price": 15220.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "拍卖中 乾隆通宝宝泉母钱评级币",
+      "price": 3330.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "拍卖 嘉庆通宝宝泉大样母钱评级币",
+      "price": 8070.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "拍卖 道光通宝宝源母钱评级币",
+      "price": 8490.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "拍卖 宣统通宝宝泉大样母坯评级币",
       "price": 16220.0,
       "date": "2026-08-13",
       "provider_id": "source_c",
@@ -123,8 +75,120 @@
       "category": "古钱"
     },
     {
-      "name": "12 重和通宝隶书评级币  结拍：08-14 20:00",
+      "name": "拍卖 咸丰通宝宝福一百评级币",
+      "price": 17820.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "拍卖 咸丰元宝宝直当百评级币",
+      "price": 6600.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "拍卖 天师大利花钱评级币",
+      "price": 3060.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "其他"
+    },
+    {
+      "name": "珍品古钱币第210期钱币个人专场",
+      "price": 1590.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "1 咸丰重宝宝泉当十铁母评级币  结拍：08-14 20:00",
+      "price": 29820.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "3 咸丰通宝宝福一百评级币  结拍：08-14 20:02",
+      "price": 17820.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "4 宣统通宝宝泉大样母坯评级币  结拍：08-14 20:02",
+      "price": 16220.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "5 重和通宝隶书评级币  结拍：08-14 20:01",
       "price": 15220.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "9 咸丰重宝宝晋当十母钱评级币  结拍：08-14 20:00",
+      "price": 11220.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "10 道光通宝宝源母钱评级币  结拍：08-14 20:01",
+      "price": 8490.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "11 叁圆评级币  结拍：08-18 20:00",
+      "price": 8160.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "其他"
+    },
+    {
+      "name": "12 嘉庆通宝宝泉大样母钱评级币  结拍：08-14 20:01",
+      "price": 8070.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "古钱"
+    },
+    {
+      "name": "13 大清银币壹圆评级币  结拍：08-18 20:00",
+      "price": 7890.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "银元"
+    },
+    {
+      "name": "14 叁圆票样评级币  结拍：08-18 20:00",
+      "price": 7170.0,
+      "date": "2026-08-13",
+      "provider_id": "source_c",
+      "type": "公开成交/报价线索",
+      "category": "其他"
+    },
+    {
+      "name": "15 咸丰元宝宝直当百评级币  结拍：08-14 20:02",
+      "price": 6600.0,
       "date": "2026-08-13",
       "provider_id": "source_c",
       "type": "公开成交/报价线索",
@@ -147,7 +211,7 @@
     {
       "provider_id": "source_c",
       "ok": true,
-      "rows": 15,
+      "rows": 23,
       "http": 200
     }
   ]
