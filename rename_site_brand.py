@@ -17,7 +17,7 @@ replacements = {
 for old, new in replacements.items():
     s = s.replace(old, new)
 
-# 品牌主标题不再显示“AI”，但保留AI自动整理作为后台能力描述。
+# 品牌主标题不再显示“AI”，但保留人工智能作为后台自动整理能力描述。
 s = s.replace('新时代人工智能 AI，让收藏畅通无阻', '新时代人工智能，让收藏信息畅通无阻')
 s = s.replace('人工智能 AI', '人工智能')
 
