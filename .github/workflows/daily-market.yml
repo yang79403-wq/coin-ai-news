@@ -1,0 +1,43 @@
+name: 洪盛集藏网每日成交行情
+
+on:
+  schedule:
+    - cron: '20 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  market:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Collect source-linked transactions
+        run: python market_update.py
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('market-data.json').read_text(encoding='utf-8'))
+          rows=d.get('rows',[])
+          assert all(r.get('item_url') and r.get('image_url') and r.get('transaction_confirmed') for r in rows)
+          print('confirmed source-linked rows:', len(rows))
+          for s in d.get('status',[]):
+              print(s.get('source_name'), 'OK' if s.get('ok') else 'FAILED', 'rows=', s.get('rows'))
+          PY
+      - name: Commit daily data and page
+        run: |
+          git config user.name '洪盛集藏网'
+          git config user.email 'actions@github.com'
+          git add market-data.json index.html
+          git diff --cached --quiet || git commit -m 'data: update source-linked coin transaction prices'
+          git push
