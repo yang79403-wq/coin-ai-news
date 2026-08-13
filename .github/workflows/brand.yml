@@ -1,0 +1,36 @@
+name: 洪盛集藏网品牌统一
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'index.html'
+      - 'rename_site_brand.py'
+
+permissions:
+  contents: write
+
+jobs:
+  brand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 获取网站代码
+        uses: actions/checkout@v4
+      - name: 统一网站名称
+        run: python rename_site_brand.py
+      - name: 检查品牌名称
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html = Path('index.html').read_text(encoding='utf-8')
+          if '洪盛集藏网' not in html:
+              raise SystemExit('品牌名称更新失败')
+          print('洪盛集藏网品牌检查通过')
+          PY
+      - name: 提交品牌修改
+        run: |
+          git config user.name "洪盛集藏网"
+          git config user.email "actions@github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "网站品牌统一为洪盛集藏网"
+          git push
