@@ -37,12 +37,7 @@ html = f'''{marker}
     <article class="real-coin-card"><img src="assets/coins/panda-silver.jpg" alt="中国熊猫银币实物图" loading="lazy"><div class="body"><b>金银币</b><small>中国熊猫银币实物参考</small></div></article>
   </div>
 </section>
-<script>
-document.querySelectorAll('.real-coin-card').forEach(card=>card.addEventListener('click',()=>{
-  const img=card.querySelector('img');
-  if(img) window.open(img.src,'_blank','noopener');
-}));
-</script>'''
+
 
 if '</body>' in s:
     s = s.replace('</body>', html + '\n</body>', 1)
