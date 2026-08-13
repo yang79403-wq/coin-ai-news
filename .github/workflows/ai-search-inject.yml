@@ -15,6 +15,18 @@ jobs:
       - name: 获取网站代码
         uses: actions/checkout@v4
 
+      - name: 自动修复AI搜索注入器
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('inject_ai_search_v2.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace("re.sub(pattern, html.rstrip(), s, count=1, flags=re.S)", "re.sub(pattern, lambda _m: html.rstrip(), s, count=1, flags=re.S)")
+          s = s.replace("re.sub(css_pattern, css.strip(), s, count=1, flags=re.S)", "re.sub(css_pattern, lambda _m: css.strip(), s, count=1, flags=re.S)")
+          p.write_text(s, encoding='utf-8')
+          print('inject_ai_search_v2.py auto-fixed')
+          PY
+
       - name: 检查并注入AI搜索
         run: python inject_ai_search_v2.py
 
@@ -26,6 +38,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git commit -m "Add CoinAI smart search UI"
+          git add index.html inject_ai_search_v2.py
+          git commit -m "Fix and upgrade CoinAI GPT-style search"
           git push
