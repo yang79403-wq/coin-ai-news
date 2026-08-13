@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-08-13 07:15 UTC",
+  "updated_at": "2026-08-13 08:48 UTC",
   "source_type": "自动行情接口参考",
   "gold": {
     "symbol": "GC=F",
-    "price": 4436.2,
+    "price": 4429.9,
     "label": "自动更新国际现货/期货参考"
   },
   "silver": {
     "symbol": "SI=F",
-    "price": 64.92,
+    "price": 64.6,
     "label": "自动更新国际现货/期货参考"
   }
 }
