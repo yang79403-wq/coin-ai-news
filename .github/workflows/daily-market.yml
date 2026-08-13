@@ -22,6 +22,74 @@ jobs:
         run: pip install requests beautifulsoup4
       - name: Collect source-linked transactions
         run: python market_update.py
+      - name: Verify original item pages
+        run: |
+          python - <<'PY'
+          import json, re
+          from datetime import datetime, timezone
+          from html import unescape
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+
+          path=Path('market-data.json')
+          data=json.loads(path.read_text(encoding='utf-8'))
+          words=['成交价','成交价格','已成交','落槌价','落槌','中标价','中标','得标价','得标','拍得','结拍']
+          active=['拍卖中','竞拍中','竞价中','正在拍','待拍','尚未结拍']
+          patterns=[r'(?:成交价格|成交价|落槌价|中标价|得标价|最终价|拍得|成交|落槌|中标|得标)\\s*[:：]?\\s*[¥￥]?\\s*([0-9][0-9,]*(?:\\.\\d+)?)\\s*元?',r'[¥￥]\\s*([0-9][0-9,]*(?:\\.\\d+)?)']
+          headers={'User-Agent':'Mozilla/5.0 (compatible; HongshengCollectionVerifier/1.0)'}
+          session=requests.Session(); session.headers.update(headers)
+
+          def clean(x): return ' '.join(unescape(str(x or '')).replace('\\xa0',' ').split())
+          def get_price(text):
+              text=clean(text).replace(',','')
+              for p in patterns:
+                  for m in re.finditer(p,text,re.I):
+                      try: v=float(m.group(1))
+                      except ValueError: continue
+                      if 0<v<100000000: return v
+              return None
+          def is_confirmed(text):
+              if any(x in text for x in active) and not any(x in text for x in ['已成交','成交价','成交价格','落槌','中标','得标','拍得','结拍']): return False
+              return any(x in text for x in words)
+          def choose_image(soup, base):
+              candidates=[]
+              for img in soup.find_all('img',src=True):
+                  src=urljoin(base,img.get('src'))
+                  if not src.startswith(('http://','https://')): continue
+                  raw=(img.get('alt','')+' '+img.get('title','')+' '+src).lower()
+                  if any(x in raw for x in ['logo','icon','avatar','favicon','qrcode','二维码','广告']): continue
+                  try: area=int(img.get('width') or 0)*int(img.get('height') or 0)
+                  except ValueError: area=0
+                  candidates.append((area,src))
+              return max(candidates,key=lambda x:x[0])[1] if candidates else None
+
+          verified=[]; rejected=[]
+          for row in data.get('rows',[]):
+              url=row.get('item_url')
+              if not url:
+                  rejected.append({'name':row.get('name'),'item_url':url,'error':'missing_item_url'}); continue
+              try:
+                  r=session.get(url,timeout=20,allow_redirects=True); r.raise_for_status(); r.encoding=r.apparent_encoding or r.encoding
+                  soup=BeautifulSoup(r.text,'html.parser'); text=clean(soup.get_text(' ',strip=True))
+                  if not is_confirmed(text): raise ValueError('item_page_not_confirmed')
+                  p=get_price(text)
+                  if p is None: raise ValueError('item_page_price_missing')
+                  img=choose_image(soup,r.url)
+                  if not img: raise ValueError('item_page_image_missing')
+                  row=dict(row); row['item_url']=r.url; row['source_page_url']=r.url; row['image_url']=img; row['price']=p; row['transaction_confirmed']=True; row['verification']='原始商品/拍品页面二次核验'; row['verified_at']=datetime.now(timezone.utc).astimezone().isoformat(); verified.append(row)
+              except Exception as e:
+                  rejected.append({'name':row.get('name'),'item_url':url,'error':str(e)[:160]})
+
+          data['rows']=verified
+          data['verification']={'policy':'只有打开原始商品/拍品页面后再次确认成交状态、成交价格，并从同一页面取得实物图片的记录才进入价格表。','verified_count':len(verified),'rejected_count':len(rejected),'rejected':rejected[:100],'verified_at':datetime.now(timezone.utc).astimezone().isoformat()}
+          data['updated_at']=datetime.now(timezone.utc).astimezone().isoformat()
+          path.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+          print('verified:',len(verified),'rejected:',len(rejected))
+          if not verified:
+              print('WARNING: no rows survived original-page verification; this can happen when a source blocks automated access.')
+          PY
       - name: Validate output
         run: |
           python - <<'PY'
@@ -29,15 +97,15 @@ jobs:
           from pathlib import Path
           d=json.loads(Path('market-data.json').read_text(encoding='utf-8'))
           rows=d.get('rows',[])
-          assert all(r.get('item_url') and r.get('image_url') and r.get('transaction_confirmed') for r in rows)
-          print('confirmed source-linked rows:', len(rows))
-          for s in d.get('status',[]):
-              print(s.get('source_name'), 'OK' if s.get('ok') else 'FAILED', 'rows=', s.get('rows'))
+          assert all(r.get('item_url') and r.get('image_url') and r.get('transaction_confirmed') and r.get('verification') for r in rows)
+          print('confirmed source-linked rows:',len(rows))
+          print('verification:',d.get('verification',{}).get('verified_count'),'verified,',d.get('verification',{}).get('rejected_count'),'rejected')
+          for s in d.get('status',[]): print(s.get('source_name'),'OK' if s.get('ok') else 'FAILED','rows=',s.get('rows'))
           PY
       - name: Commit daily data and page
         run: |
           git config user.name '洪盛集藏网'
           git config user.email 'actions@github.com'
           git add market-data.json index.html
-          git diff --cached --quiet || git commit -m 'data: update source-linked coin transaction prices'
+          git diff --cached --quiet || git commit -m 'data: update verified source-linked coin transaction prices'
           git push
