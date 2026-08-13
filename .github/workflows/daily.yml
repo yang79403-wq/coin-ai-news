@@ -30,6 +30,9 @@ jobs:
       - name: 镜像真实钱币图片到本站
         run: python mirror_coin_images.py
 
+      - name: 补充首页真实钱币图鉴图片
+        run: python mirror_real_gallery_images.py
+
       - name: 修复首页钱币图片路径
         run: |
           python - <<'PY'
@@ -50,6 +53,9 @@ jobs:
           print('首页钱币图片路径已修复')
           PY
 
+      - name: 注入真实钱币实物图鉴
+        run: python inject_real_coin_gallery.py
+
       - name: AI每日资讯与头条数据
         run: python news_v2.py
 
@@ -67,5 +73,5 @@ jobs:
           git config --global user.name "币智通AI"
           git config --global user.email "actions@github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "AI自动更新钱币资讯行情与收藏品趣闻"
+          git diff --cached --quiet || git commit -m "AI自动更新钱币资讯行情与真实钱币图鉴"
           git push
