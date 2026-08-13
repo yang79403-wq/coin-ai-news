@@ -1,5 +1,6 @@
 from pathlib import Path
 import re
+import subprocess
 
 p = Path('index.html')
 s = p.read_text(encoding='utf-8')
@@ -17,6 +18,15 @@ for old, new in {
     'AI全自动信息助手': '每日信息自动整理',
     'AI正在整理今日钱币行业信息，自动生成摘要与重点观察。': '平台正在整理今日钱币行业信息，自动生成摘要与重点观察。',
     '每日 AI 整理行业新闻、市场大事、拍卖动态与收藏热点': '每日整理行业新闻、市场大事、拍卖动态与收藏热点',
+}.items():
+    s = s.replace(old, new)
+
+# Repair local image references that otherwise fail the Pages resource check.
+for old, new in {
+    'assets/coins/ancient-coin.jpg': 'assets/coins/cash-coins-a.jpg',
+    'assets/coins/commemorative-coin.jpg': 'assets/coins/founding-commemorative.jpg',
+    'assets/coins/commemorative-note.jpg': 'assets/coins/rmb1-100-1b.jpg',
+    'assets/coins/yuan-shikai.jpg': 'assets/coins/yuan-3-obverse.jpg',
 }.items():
     s = s.replace(old, new)
 
@@ -49,4 +59,9 @@ if 'id="hongsheng-heritage-theme"' not in s:
     s = s.replace('</head>', css + '\n</head>', 1)
 
 p.write_text(s, encoding='utf-8')
-print('洪盛集藏网：古韵现代化视觉升级完成；前台AI对话已清理。')
+
+# Reuse the stable gallery injector so the homepage always receives the
+# current coin-reference section and the new non-AI collection search panel.
+subprocess.run(['python', 'inject_real_coin_gallery.py'], check=True)
+
+print('洪盛集藏网：古韵现代化视觉升级完成；前台AI对话已清理；图片引用与钱币查询入口已同步。')
