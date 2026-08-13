@@ -69,13 +69,13 @@ html = r'''<!-- COIN_AI_SEARCH_V1 -->
 
 pattern = r'<!-- COIN_AI_SEARCH_V1 -->.*?</section>\s*<script id="(?:coin-ai-search-script|coin-ai-chat-script)">.*?</script>'
 if re.search(pattern, s, flags=re.S):
-    s = re.sub(pattern, html.rstrip(), s, count=1, flags=re.S)
+    s = re.sub(pattern, lambda _m: html.rstrip(), s, count=1, flags=re.S)
 else:
     raise SystemExit('existing AI search marker not found')
 
 css_pattern = r'<style id="coin-ai-search-css">.*?</style>'
 if re.search(css_pattern, s, flags=re.S):
-    s = re.sub(css_pattern, css.strip(), s, count=1, flags=re.S)
+    s = re.sub(css_pattern, lambda _m: css.strip(), s, count=1, flags=re.S)
 else:
     s = s.replace('</head>', css + '\n</head>', 1)
 
