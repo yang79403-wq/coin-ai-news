@@ -18,7 +18,71 @@
 <div class="top">🪙 COIN AI · 福建钱币行业信息平台　|　AI自动收集 · 整理 · 分析 · 每日更新</div>
 <header class="hero"><div class="wrap hero-in"><div><div class="kicker">NUMISMATIC INTELLIGENCE · FUJIAN</div><div class="brand">币智通 <em>AI</em></div><div class="sub">新时代人工智能 AI，让收藏畅通无阻</div><div class="sub" style="margin-top:6px;font-size:12px;letter-spacing:2px">钱币资讯 · 市场行情 · 鉴定评估 · 收藏研究</div><p>让 AI 每天自动收集、筛选、整理钱币行业信息，形成收藏趣闻、行业新闻、市场行情、成交价格与收藏知识。平台以信息服务为核心，免费鉴定、评估与价格分析为主要服务入口。</p><div class="cities"><span class="city">📍 福建泉州 · 当天上门评估鉴定</span><span class="city">📍 福建厦门 · 当天上门评估鉴定</span><span class="city">📍 福建福州 · 当天上门评估鉴定</span><span class="city">🚗 福建省内可预约上门</span></div></div><div class="hero-coin"><img src="assets/coins/cash-coins-a.jpg" alt="珍稀钱币"><span>珍稀钱币 · 每日收藏专题</span></div></div></header>
 <nav class="nav"><div class="wrap navin"><a href="#news">🔥 今日头条 Today</a><a href="#facts">🪙 收藏趣闻 Stories</a><a href="#coins">🪙 钱币图鉴 Coins</a><a href="#market">📊 成交价格 Market</a><a href="#metals">🥇 Gold & Silver</a><a href="#free">🔎 免费鉴定 Free</a><a href="#service">📍 福建服务 Fujian</a></div></nav>
+<style id="coin-ai-search-css">
+.coin-ai-search{margin:8px 0;padding:22px;border-radius:22px;background:linear-gradient(135deg,#fffaf0,#fff);border:1px solid #d9b45d;box-shadow:0 12px 34px rgba(70,20,0,.08)}
+.coin-ai-search h2{margin:0;color:#650600;font-size:26px}.coin-ai-search .ai-tag{display:block;margin-top:6px;color:#8a6a24;font-size:12px}
+.coin-ai-search .ai-search-form{display:flex;gap:8px;background:#fff;border:1px solid #e3d4bb;border-radius:15px;padding:7px;margin-top:14px}
+.coin-ai-search input{flex:1;min-width:0;border:0;outline:0;padding:12px;font-size:15px;background:transparent;color:#2b211b}.coin-ai-search button{border:0;border-radius:11px;background:#7d0b0b;color:#fff;padding:11px 18px;font-weight:900;cursor:pointer}
+.coin-ai-search .ai-suggestions{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0}.coin-ai-search .ai-suggestion{border:1px solid #e5d6bc;background:#fffaf0;border-radius:999px;padding:7px 10px;color:#6a250e;cursor:pointer;font-size:12px}
+.coin-ai-search .ai-answer{display:none;margin-top:14px;background:#fffdf8;border:1px solid #ead9b9;border-radius:16px;padding:16px;line-height:1.75}.coin-ai-search .ai-answer.show{display:block}
+.coin-ai-search .ai-result{padding:10px 0;border-bottom:1px solid #eee2d1}.coin-ai-search .ai-meta{font-size:11px;color:#897b6d;margin-top:5px}.coin-ai-search .ai-note{font-size:11px;color:#75603a;background:#fff6d8;border-radius:10px;padding:9px;margin-top:12px}
+@media(max-width:560px){.coin-ai-search .ai-search-form{padding:5px}.coin-ai-search button{padding:10px 12px}.coin-ai-search input{font-size:14px}}
+</style>
 <main class="wrap">
+<!-- COIN_AI_SEARCH_V1 -->
+<section id="ai-search" class="section coin-ai-search" aria-label="币智通AI智能搜索">
+  <h2>🔎 币智通 AI 智能搜索</h2>
+  <span class="ai-tag">问钱币 · 问价格 · 问版别 · 问收藏知识</span>
+  <form class="ai-search-form" id="coin-ai-search-form">
+    <input id="coin-ai-search-input" type="search" autocomplete="off" placeholder="例如：袁大头三年现在大概什么价格？" aria-label="搜索钱币问题">
+    <button type="submit">AI搜索</button>
+  </form>
+  <div class="ai-suggestions">
+    <button class="ai-suggestion" type="button">袁大头三年价格</button>
+    <button class="ai-suggestion" type="button">古钱币怎么辨版</button>
+    <button class="ai-suggestion" type="button">老纸币市场行情</button>
+    <button class="ai-suggestion" type="button">金银币收藏知识</button>
+  </div>
+  <div id="coin-ai-search-answer" class="ai-answer" aria-live="polite"></div>
+  <div class="ai-note">优先检索币智通网站资料；接入 AI Search 后，可进一步使用持续更新的知识库生成综合回答。价格仅作收藏研究参考。</div>
+</section>
+<script id="coin-ai-search-script">
+(function(){
+  var endpoint = window.COIN_AI_SEARCH_ENDPOINT || '';
+  var form = document.getElementById('coin-ai-search-form');
+  var input = document.getElementById('coin-ai-search-input');
+  var answer = document.getElementById('coin-ai-search-answer');
+  if(!form || !input || !answer) return;
+  function esc(s){return String(s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c];});}
+  function clean(s){return String(s || '').replace(/\s+/g,' ').trim();}
+  function localSearch(q){
+    var words=clean(q).toLowerCase().split(/[^\u4e00-\u9fa5a-z0-9]+/).filter(Boolean);
+    var nodes=Array.prototype.slice.call(document.querySelectorAll('main h1,main h2,main h3,main p,main td,main li,.coin b,.coin small,.fact b,.fact p'));
+    var scored=nodes.map(function(n){var t=clean(n.textContent),low=t.toLowerCase(),score=words.reduce(function(a,w){return a+(low.indexOf(w)>=0?1:0);},0);return {t:t,score:score};}).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score;});
+    var out=[],seen={};
+    scored.forEach(function(x){if(out.length<6 && !seen[x.t]){seen[x.t]=1;out.push(x.t);}});
+    return out;
+  }
+  function showLocal(q){
+    var hits=localSearch(q);
+    var body=hits.length?hits.map(function(x){return '<div class="ai-result">'+esc(x)+'</div>';}).join(''):'<div class="ai-result">暂未找到直接匹配资料。请换一个钱币名称、版别或价格问题。</div>';
+    answer.innerHTML='<h3>📚 币智通资料检索</h3>'+body+'<div class="ai-meta">当前为网站内资料检索。配置 AI Search 后将升级为 AI 综合回答。</div>';
+    answer.classList.add('show');
+  }
+  function search(q){
+    answer.innerHTML='<h3>🤖 AI正在检索</h3><div class="ai-result">正在分析“'+esc(q)+'”…</div>';
+    answer.classList.add('show');
+    if(!endpoint){showLocal(q);return;}
+    fetch(endpoint.replace(/\/$/,'')+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:q}]})})
+      .then(function(r){if(!r.ok) throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(data){var text=data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content;if(text){answer.innerHTML='<h3>🤖 币智通 AI 分析</h3><div class="ai-result">'+esc(text).replace(/\n/g,'<br>')+'</div><div class="ai-meta">AI Search · 实时检索结果</div>'; }else{showLocal(q);}})
+      .catch(function(){showLocal(q);});
+  }
+  form.addEventListener('submit',function(e){e.preventDefault();var q=clean(input.value);if(q)search(q);});
+  Array.prototype.slice.call(document.querySelectorAll('.ai-suggestion')).forEach(function(b){b.addEventListener('click',function(){input.value=b.textContent;form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));});});
+})();
+</script>
+
 <section class="section"><div class="service-banner"><h2>📍 福建泉州 · 厦门 · 福州 ·成都 当天评估鉴定</h2><p>泉州、厦门、福州及福建省内地区，可提前预约安排<strong>当天上门评估、鉴定、价格分析</strong>。具体到达时间根据地点、交通与预约情况确认。</p><div class="city-grid"><div class="city-card"><b>泉州 Quanzhou</b><strong>✓ 当天可预约</strong><span>鉴定 · 估价 · 市场分析</span></div><div class="city-card"><b>厦门 Xiamen</b><strong>✓ 当天可预约</strong><span>鉴定 · 估价 · 市场分析</span></div><div class="city-card"><b>福州 Fuzhou</b><strong>✓ 当天可预约</strong><span>鉴定 · 估价 · 市场分析</span></div></div><div class="contact"><div>📞 电话 / 微信同号<br><b>13799875350</b></div><a href="tel:13799875350">立即联系</a></div></div></section>
 <section id="free" class="section"><div class="free"><div class="panel"><h3>🔎 免费鉴定 · 免费评估 · Free Consultation</h3><p>提供钱币正面、背面、边齿、细节照片或视频，AI进行初步识别、品种分析和市场参考，再结合人工复核。无交易不收费，隐私全程保密。</p><a class="btn" href="ai_appraisal.html">📷 开始免费鉴定</a></div><div class="panel"><h3>🤖 AI全自动信息助手</h3><p>自动收集行业资讯、收藏趣闻、市场新闻、公开成交线索、贵金属行情与知识资料，进行去重、分类、摘要和趋势整理。</p><div class="notice">AI分析和价格仅作收藏研究参考，不替代实物专业鉴定，也不保证成交价格。</div></div></div></section>
 <section id="news" class="section"><h2 class="title">🔥 今日钱币头条 · Today’s Coin News</h2><p class="desc">每日 AI 整理行业新闻、市场大事、拍卖动态与收藏热点</p><div class="news-grid"><div class="news-main"><img src="assets/coins/cash-coins-a.jpg" alt="珍稀钱币头条"><div class="news-copy"><span>AI DAILY · 每日更新</span><h2 id="headlineTitle">珍稀钱币、收藏市场与行业动态</h2><p id="headlineText">AI正在整理今日钱币行业信息，自动生成摘要与重点观察。</p></div></div><div id="newsList" class="facts"><div class="fact"><b>📰 今日行业资讯</b><p>自动更新中</p></div><div class="fact"><b>📈 今日市场观察</b><p>AI整理公开市场线索</p></div><div class="fact"><b>🏆 今日收藏热点</b><p>关注稀少珍稀钱币与热门品种</p></div></div></div></section>
