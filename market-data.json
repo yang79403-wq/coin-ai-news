@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T17:59:04.990315+00:00",
+  "updated_at": "2026-08-13T18:06:52.612137+00:00",
   "scope": "一尘网、钱币天堂、华夏古泉公开成交页面",
   "data_policy": "仅收录能够同时关联到原始商品/拍品链接、该条目原始实物图片和明确成交价格的公开记录；不把挂牌价或进行中的竞价当作成交价。",
   "sources": [
@@ -30,7 +30,7 @@
       "pages": 0,
       "rows": 0,
       "errors": [
-        "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+        "ConnectionError: HTTPSConnectionPool(host='www.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www.pm001.net', port=443): Faile"
       ]
     },
     {
@@ -47,7 +47,7 @@
       "source_name": "华夏古泉",
       "source_url": "https://www.hxguquan.com/",
       "ok": true,
-      "pages": 2,
+      "pages": 1,
       "rows": 0,
       "errors": []
     }
@@ -55,8 +55,6 @@
   "verification": {
     "policy": "只有打开原始商品/拍品页面后再次确认成交状态、成交价格，并从同一页面取得实物图片的记录才进入价格表。",
     "verified_count": 0,
-    "rejected_count": 0,
-    "rejected": [],
-    "verified_at": "2026-08-13T17:59:04.990295+00:00"
+    "verified_at": "2026-08-13T18:06:52.612162+00:00"
   }
 }
