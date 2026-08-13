@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 检查并注入AI搜索
-        run: python inject_ai_search.py
+        run: python inject_ai_search_v2.py
 
       - name: 提交搜索页面修改
         run: |
