@@ -39,6 +39,7 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
+          # 所有替换目标都指向仓库中已确认存在的本地实物图片，避免 Pages 出现裂图。
           replacements = {
               'assets/coins/rare-xianfeng.jpg': 'assets/coins/cash-coins-a.jpg',
               'assets/coins/yuan-silver.jpg': 'assets/coins/yuan-3-obverse.jpg',
@@ -46,6 +47,12 @@ jobs:
               'assets/coins/banknote.jpg': 'assets/coins/rmb1-100-1b.jpg',
               'assets/coins/commemorative.jpg': 'assets/coins/founding-commemorative.jpg',
               'assets/coins/gold-silver.jpg': 'assets/coins/panda-2016-reverse.png',
+              # 旧版真实图鉴脚本曾引用但仓库不存在的文件，统一改为现有镜像资源。
+              'assets/coins/yuan-3-reverse.jpg': 'assets/coins/yuan-1921-iii.png',
+              'assets/coins/kangxi-tongbao.jpg': 'assets/coins/cash-coins-a.jpg',
+              'assets/coins/qianlong-tongbao.jpg': 'assets/coins/cash-coins-a.jpg',
+              'assets/coins/central-mint-1930.jpg': 'assets/coins/founding-commemorative.jpg',
+              'assets/coins/panda-silver.jpg': 'assets/coins/panda-2016-reverse.png',
           }
           for old, new in replacements.items():
               s = s.replace(old, new)
@@ -100,11 +107,11 @@ jobs:
           missing = [x for x in required if not (root / x).exists()]
           if missing:
               raise SystemExit('缺少关键文件: ' + ', '.join(missing))
-          bad = sorted(set(re.findall(r'(?:src|href)=[\"\']([^\"\']+)[\"\']', html)))
-          bad = [x for x in bad if x.startswith('assets/') and not (root / x.split('?',1)[0]).exists()]
+          refs = sorted(set(re.findall(r'(?:src|href)=[\"\']([^\"\']+)[\"\']', html)))
+          bad = [x for x in refs if x.startswith('assets/') and not (root / x.split('?',1)[0]).exists()]
           if bad:
               raise SystemExit('发现不存在的本地资源: ' + ', '.join(bad[:20]))
-          print('关键网页资源检查通过')
+          print(f'关键网页资源检查通过，共检查 {len(refs)} 个 src/href 引用')
           PY
 
       - name: 自动提交每日数据与本地图片
