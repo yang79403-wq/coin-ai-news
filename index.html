@@ -31,12 +31,12 @@
 </style>
 <main class="wrap">
 <!-- COIN_AI_SEARCH_V1 -->
-<section id="ai-search" class="section coin-ai-search" aria-label="洪盛集藏网智能搜索">
-  <h2>🤖 洪盛集藏网</h2>
+<section id="ai-search" class="section coin-ai-search" aria-label="币智通AI智能搜索">
+  <h2>🤖 币智通 AI</h2>
   <span class="ai-tag">智能理解问题：钱币、版别、行情、收藏知识都可以直接问</span>
   <div class="coin-ai-chat">
     <div id="coin-ai-messages" class="coin-ai-messages" aria-live="polite">
-      <div class="coin-ai-msg assistant"><div class="coin-ai-avatar">🪙</div><div><div class="coin-ai-bubble">你好，我是洪盛集藏网。你可以直接问我：这枚钱币是什么？现在大概多少钱？版别怎么判断？最近市场怎么样？也可以上传钱币图片。</div><div class="coin-ai-meta">收藏研究助手 · 价格仅作市场参考</div></div></div>
+      <div class="coin-ai-msg assistant"><div class="coin-ai-avatar">🪙</div><div><div class="coin-ai-bubble">你好，我是币智通 AI。你可以直接问我：这枚钱币是什么？现在大概多少钱？版别怎么判断？最近市场怎么样？也可以上传钱币图片。</div><div class="coin-ai-meta">收藏研究助手 · 价格仅作市场参考</div></div></div>
     </div>
     <div class="coin-ai-suggestions">
       <button class="coin-ai-suggestion" type="button">袁大头三年现在大概什么价格？</button>
@@ -46,7 +46,7 @@
     </div>
     <form id="coin-ai-form" class="coin-ai-form">
       <label class="coin-ai-upload" title="上传钱币图片">📷<input id="coin-ai-file" class="coin-ai-file" type="file" accept="image/*"></label>
-      <input id="coin-ai-input" class="coin-ai-input" type="search" autocomplete="off" placeholder="直接问我，例如：袁大头三年多少钱？" aria-label="向洪盛集藏网提问">
+      <input id="coin-ai-input" class="coin-ai-input" type="search" autocomplete="off" placeholder="直接问我，例如：袁大头三年多少钱？" aria-label="向币智通AI提问">
       <button class="coin-ai-send" type="submit">发送</button>
     </form>
     <div id="coin-ai-status" class="coin-ai-status">🟡 智能接口待连接：当前使用网站资料检索；接入安全 AI 服务后自动升级为多轮智能回答。</div>
@@ -60,11 +60,11 @@
   if(!form||!input||!messages) return;
   var history=[];
   function esc(s){return String(s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c];});}
-  function add(role,text){var row=document.createElement('div');row.className='coin-ai-msg '+role;row.innerHTML='<div class="coin-ai-avatar">'+(role==='user'?'👤':'🪙')+'</div><div><div class="coin-ai-bubble">'+esc(text).replace(/\n/g,'<br>')+'</div><div class="coin-ai-meta">'+(role==='user'?'你的问题':'洪盛集藏网')+'</div></div>';messages.appendChild(row);messages.scrollTop=messages.scrollHeight;}
+  function add(role,text){var row=document.createElement('div');row.className='coin-ai-msg '+role;row.innerHTML='<div class="coin-ai-avatar">'+(role==='user'?'👤':'🪙')+'</div><div><div class="coin-ai-bubble">'+esc(text).replace(/\n/g,'<br>')+'</div><div class="coin-ai-meta">'+(role==='user'?'你的问题':'币智通 AI')+'</div></div>';messages.appendChild(row);messages.scrollTop=messages.scrollHeight;}
   function localAnswer(q){
     var terms=q.toLowerCase().split(/[^\u4e00-\u9fa5a-z0-9]+/).filter(Boolean), nodes=Array.prototype.slice.call(document.querySelectorAll('main h1,main h2,main h3,main p,main td,main li,.coin b,.coin small,.fact b,.fact p')), scored=nodes.map(function(n){var t=(n.textContent||'').trim(),l=t.toLowerCase(),score=terms.reduce(function(a,w){return a+(l.indexOf(w)>=0?1:0)},0);return {t:t,score:score}}).filter(function(x){return x.score>0}).sort(function(a,b){return b.score-a.score});
     var seen={},hits=[];scored.forEach(function(x){if(hits.length<5&&!seen[x.t]){seen[x.t]=1;hits.push(x.t)}});
-    return hits.length?'我先从洪盛集藏网当前网页资料中找到这些相关内容：\n\n• '+hits.join('\n• ')+'\n\n如果你需要具体价格，我建议再提供：钱币名称、版别、品相和正反面图片。这样接入智能行情检索后，我可以进一步综合成交数据分析。':'当前网页资料中暂时没有直接匹配内容。你可以换成具体钱币名称、版别或上传图片继续问。';
+    return hits.length?'我先从币智通当前网页资料中找到这些相关内容：\n\n• '+hits.join('\n• ')+'\n\n如果你需要具体价格，我建议再提供：钱币名称、版别、品相和正反面图片。这样接入智能行情检索后，我可以进一步综合成交数据分析。':'当前网页资料中暂时没有直接匹配内容。你可以换成具体钱币名称、版别或上传图片继续问。';
   }
   function send(q,imageData){
     q=(q||'').trim(); if(!q&&!imageData)return;
