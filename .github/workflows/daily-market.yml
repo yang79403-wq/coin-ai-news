@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -35,13 +37,13 @@ jobs:
 
           path=Path('market-data.json')
           data=json.loads(path.read_text(encoding='utf-8'))
-          words=['成交价','成交价格','已成交','落槌价','落槌','中标价','中标','得标价','得标','拍得','结拍']
-          active=['拍卖中','竞拍中','竞价中','正在拍','待拍','尚未结拍']
-          patterns=[r'(?:成交价格|成交价|落槌价|中标价|得标价|最终价|拍得|成交|落槌|中标|得标)\\s*[:：]?\\s*[¥￥]?\\s*([0-9][0-9,]*(?:\\.\\d+)?)\\s*元?',r'[¥￥]\\s*([0-9][0-9,]*(?:\\.\\d+)?)']
-          headers={'User-Agent':'Mozilla/5.0 (compatible; HongshengCollectionVerifier/1.0)'}
+          words=['成交价','成交价格','成交金额','已成交','成交','落槌价','落槌','中标价','中标','得标价','得标','拍得','结拍','结标','已结标','最终成交','竞价成功','竞买成功','已售','售出','已卖','交易成功','交易完成']
+          active=['拍卖中','竞拍中','竞价中','正在拍','待拍','尚未结拍','尚未结标','出价中','进行中']
+          patterns=[r'(?:成交金额|成交价格|成交价|结标价|落槌价|中标价|得标价|最终成交|最终价|拍得|成交|落槌|中标|得标|已售|售出|已卖)\s*[:：=]?\s*[¥￥]?\s*([0-9][0-9,]*(?:\.\d+)?)\s*(?:元|RMB|人民币)?',r'(?:结标|结标价|中标|得标|最终价|成交)\s*[：:]?\s*(?:RMB|￥|¥)?\s*([0-9][0-9,]*(?:\.\d+)?)',r'[¥￥]\s*([0-9][0-9,]*(?:\.\d+)?)']
+          headers={'User-Agent':'Mozilla/5.0 (compatible; HongshengCollectionVerifier/1.1)'}
           session=requests.Session(); session.headers.update(headers)
 
-          def clean(x): return ' '.join(unescape(str(x or '')).replace('\\xa0',' ').split())
+          def clean(x): return ' '.join(unescape(str(x or '')).replace('\xa0',' ').split())
           def get_price(text):
               text=clean(text).replace(',','')
               for p in patterns:
@@ -51,12 +53,14 @@ jobs:
                       if 0<v<100000000: return v
               return None
           def is_confirmed(text):
-              if any(x in text for x in active) and not any(x in text for x in ['已成交','成交价','成交价格','落槌','中标','得标','拍得','结拍']): return False
+              if any(x in text for x in active) and not any(x in text for x in ['已成交','成交价','成交价格','成交金额','落槌','中标','得标','拍得','结拍','结标','已结标','竞价成功','竞买成功','已售','售出','已卖','交易成功','交易完成']): return False
               return any(x in text for x in words)
           def choose_image(soup, base):
               candidates=[]
-              for img in soup.find_all('img',src=True):
-                  src=urljoin(base,img.get('src'))
+              for img in soup.find_all('img'):
+                  src=img.get('src') or img.get('data-src') or img.get('data-original')
+                  if not src: continue
+                  src=urljoin(base,src)
                   if not src.startswith(('http://','https://')): continue
                   raw=(img.get('alt','')+' '+img.get('title','')+' '+src).lower()
                   if any(x in raw for x in ['logo','icon','avatar','favicon','qrcode','二维码','广告']): continue
@@ -71,14 +75,17 @@ jobs:
               if not url:
                   rejected.append({'name':row.get('name'),'item_url':url,'error':'missing_item_url'}); continue
               try:
-                  r=session.get(url,timeout=20,allow_redirects=True); r.raise_for_status(); r.encoding=r.apparent_encoding or r.encoding
-                  soup=BeautifulSoup(r.text,'html.parser'); text=clean(soup.get_text(' ',strip=True))
-                  if not is_confirmed(text): raise ValueError('item_page_not_confirmed')
-                  p=get_price(text)
+                  r=session.get(url,timeout=25,allow_redirects=True); r.raise_for_status(); r.encoding=r.apparent_encoding or r.encoding
+                  soup=BeautifulSoup(r.text,'html.parser')
+                  text=clean(soup.get_text(' ',strip=True))
+                  scripts=' '.join(clean(x.get_text(' ',strip=True)) for x in soup.find_all('script'))
+                  raw=text+' '+scripts
+                  if not is_confirmed(raw): raise ValueError('item_page_not_confirmed')
+                  p=get_price(raw)
                   if p is None: raise ValueError('item_page_price_missing')
                   img=choose_image(soup,r.url)
                   if not img: raise ValueError('item_page_image_missing')
-                  row=dict(row); row['item_url']=r.url; row['source_page_url']=r.url; row['image_url']=img; row['price']=p; row['transaction_confirmed']=True; row['verification']='原始商品/拍品页面二次核验'; row['verified_at']=datetime.now(timezone.utc).astimezone().isoformat(); verified.append(row)
+                  row=dict(row); row['item_url']=r.url; row['image_url']=img; row['price']=p; row['transaction_confirmed']=True; row['verification']='原始商品/拍品页面二次核验'; row['verified_at']=datetime.now(timezone.utc).astimezone().isoformat(); verified.append(row)
               except Exception as e:
                   rejected.append({'name':row.get('name'),'item_url':url,'error':str(e)[:160]})
 
@@ -87,8 +94,8 @@ jobs:
           data['updated_at']=datetime.now(timezone.utc).astimezone().isoformat()
           path.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
           print('verified:',len(verified),'rejected:',len(rejected))
-          if not verified:
-              print('WARNING: no rows survived original-page verification; this can happen when a source blocks automated access.')
+          for source in data.get('status',[]): print(source.get('source_name'),'OK' if source.get('ok') else 'FAILED','rows=',source.get('rows'),'errors=',source.get('errors'))
+          if not verified: print('WARNING: no rows survived original-page verification; inspect source status/errors before treating this as zero market transactions.')
           PY
       - name: Validate output
         run: |
@@ -100,7 +107,7 @@ jobs:
           assert all(r.get('item_url') and r.get('image_url') and r.get('transaction_confirmed') and r.get('verification') for r in rows)
           print('confirmed source-linked rows:',len(rows))
           print('verification:',d.get('verification',{}).get('verified_count'),'verified,',d.get('verification',{}).get('rejected_count'),'rejected')
-          for s in d.get('status',[]): print(s.get('source_name'),'OK' if s.get('ok') else 'FAILED','rows=',s.get('rows'))
+          for s in d.get('status',[]): print(s.get('source_name'),'OK' if s.get('ok') else 'FAILED','rows=',s.get('rows'),'pages=',s.get('pages'))
           PY
       - name: Commit daily data and page
         run: |
@@ -108,4 +115,5 @@ jobs:
           git config user.email 'actions@github.com'
           git add market-data.json index.html
           git diff --cached --quiet || git commit -m 'data: update verified source-linked coin transaction prices'
-          git push
+          git pull --rebase --autostash origin main
+          git push origin main
