@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-08-13T04:45:10Z",
+  "updated_at_utc": "2026-08-13T04:59:57Z",
   "notice": "Public Wikimedia Commons reference images mirrored for GitHub Pages. Check each original file page for current license/attribution requirements before reuse outside this site.",
   "images": [
     {
@@ -72,7 +72,7 @@
       "local": "assets/coins/yuan-1921-iii.png",
       "mirrored": true,
       "fallback_used": false,
-      "error": null
+      "error": "429 Client Error: Too many requests (f061ab2) for url: https://upload.wikimedia.org/wikipedia/commons/0/00/Yuan_Shikai_Dollar_Year_3_Obverse.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
     }
   ]
 }
