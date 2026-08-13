@@ -1,0 +1,31 @@
+name: 币智通AI智能搜索注入
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inject-search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 获取网站代码
+        uses: actions/checkout@v4
+
+      - name: 检查并注入AI搜索
+        run: python inject_ai_search.py
+
+      - name: 提交搜索页面修改
+        run: |
+          if git diff --quiet; then
+            echo "AI search already injected"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Add CoinAI smart search UI"
+          git push
