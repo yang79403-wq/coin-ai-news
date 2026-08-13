@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-08-13T17:21:53Z",
+  "updated_at_utc": "2026-08-13T17:54:00Z",
   "notice": "Public Wikimedia Commons reference images mirrored for GitHub Pages. Check each original file page for current license/attribution requirements before reuse outside this site.",
   "images": [
     {
@@ -48,7 +48,7 @@
       "local": "assets/coins/panda-2016-reverse.png",
       "mirrored": true,
       "fallback_used": false,
-      "error": "429 Client Error: Too many requests (f061ab2) for url: https://upload.wikimedia.org/wikipedia/commons/4/42/China_Panda_Goldm%C3%BCnze_2016_R%C3%BCckseite.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+      "error": null
     },
     {
       "id": "founding-commemorative",
@@ -60,7 +60,7 @@
       "local": "assets/coins/founding-commemorative.jpg",
       "mirrored": true,
       "fallback_used": false,
-      "error": "429 Client Error: Too many requests (f061ab2) for url: https://upload.wikimedia.org/wikipedia/commons/6/6a/%E4%B8%AD%E5%8D%8E%E6%B0%91%E5%9B%BD%E5%BC%80%E5%9B%BD%E7%BA%AA%E5%BF%B5%E5%B8%81%E4%B8%80%E5%9C%86%E7%A1%AC%E5%B8%81_%E6%AD%A3%E9%9D%A2.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+      "error": null
     },
     {
       "id": "yuan-mechanism-reference",
@@ -71,8 +71,8 @@
       "label": "机制银币",
       "local": "assets/coins/yuan-1921-iii.png",
       "mirrored": true,
-      "fallback_used": true,
-      "error": "source unavailable; generated local PNG copy from yuan-3-obverse.jpg"
+      "fallback_used": false,
+      "error": null
     }
   ]
 }
