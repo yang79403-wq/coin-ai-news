@@ -1,202 +1,55 @@
 {
-  "updated_at": "2026-08-13T17:01:39.999844+00:00",
-  "scope": "公开市场成交/报价线索，仅作收藏研究参考",
-  "categories": [
-    "古钱",
-    "银元",
-    "纸币",
-    "纪念币",
-    "纪念钞",
-    "金银币"
-  ],
-  "rows": [
+  "updated_at": "2026-08-13T17:22:25.634004+00:00",
+  "scope": "一尘网、钱币天堂、华夏古泉公开成交页面",
+  "data_policy": "仅收录能够同时关联到原始商品/拍品链接、该条目原始实物图片和明确成交价格的公开记录；不把挂牌价或进行中的竞价当作成交价。",
+  "sources": [
     {
-      "name": "拍卖中 百达翡丽金怀表",
-      "price": 39620.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "其他"
+      "provider_id": "yichen",
+      "source_name": "一尘网",
+      "url": "https://www.pm001.net/index.asp"
     },
     {
-      "name": "拍卖中 咸丰重宝宝泉当十铁母评级币",
-      "price": 37820.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
+      "provider_id": "yy11",
+      "source_name": "钱币天堂",
+      "url": "https://www.yy11.com/htm/shop.cgi"
     },
     {
-      "name": "拍卖中 咸丰重宝宝晋当十母钱评级币",
-      "price": 11220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖中 重和通宝隶书评级币",
-      "price": 19620.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖中 乾隆通宝宝泉母钱评级币",
-      "price": 3870.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖 嘉庆通宝宝泉大样母钱评级币",
-      "price": 18220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖 道光通宝宝源母钱评级币",
-      "price": 10220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖 宣统通宝宝泉大样母坯评级币",
-      "price": 22620.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖 咸丰通宝宝福一百评级币",
-      "price": 23820.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖 咸丰元宝宝直当百评级币",
-      "price": 6960.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "拍卖 天师大利花钱评级币",
-      "price": 6030.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "其他"
-    },
-    {
-      "name": "珍品古钱币第210期钱币个人专场",
-      "price": 1590.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "2 咸丰重宝宝泉当十铁母评级币  结拍：08-14 20:00",
-      "price": 37820.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "3 咸丰通宝宝福一百评级币  结拍：08-14 20:02",
-      "price": 23820.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "4 宣统通宝宝泉大样母坯评级币  结拍：08-14 20:02",
-      "price": 22620.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "5 重和通宝隶书评级币  结拍：08-14 20:01",
-      "price": 19620.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "6 嘉庆通宝宝泉大样母钱评级币  结拍：08-14 20:01",
-      "price": 18220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "11 道光通宝宝源母钱评级币  结拍：08-14 20:01",
-      "price": 10220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "13 咸丰重宝宝晋当十母钱评级币  结拍：08-14 20:00",
-      "price": 11220.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "古钱"
-    },
-    {
-      "name": "14 叁圆评级币  结拍：08-18 20:00",
-      "price": 8160.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "其他"
-    },
-    {
-      "name": "15 大清银币壹圆评级币  结拍：08-18 20:00",
-      "price": 7890.0,
-      "date": "2026-08-13",
-      "provider_id": "source_c",
-      "type": "公开成交/报价线索",
-      "category": "银元"
+      "provider_id": "huaxia",
+      "source_name": "华夏古泉",
+      "url": "https://www.hxguquan.com/"
     }
   ],
+  "rows": [],
+  "summary": [],
   "status": [
     {
-      "provider_id": "source_a",
+      "provider_id": "yichen",
+      "source_name": "一尘网",
+      "source_url": "https://www.pm001.net/index.asp",
       "ok": false,
+      "pages": 0,
       "rows": 0,
-      "error": "HTTPSConnectionPool(host='www.xx007.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPSConnection(host='www.xx007.com', port="
+      "errors": [
+        "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+      ]
     },
     {
-      "provider_id": "source_b",
+      "provider_id": "yy11",
+      "source_name": "钱币天堂",
+      "source_url": "https://www.yy11.com/htm/shop.cgi",
       "ok": true,
+      "pages": 1,
       "rows": 0,
-      "http": 200
+      "errors": []
     },
     {
-      "provider_id": "source_c",
+      "provider_id": "huaxia",
+      "source_name": "华夏古泉",
+      "source_url": "https://www.hxguquan.com/",
       "ok": true,
-      "rows": 21,
-      "http": 200
+      "pages": 2,
+      "rows": 0,
+      "errors": []
     }
   ]
 }
