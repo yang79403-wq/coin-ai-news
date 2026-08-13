@@ -1,4 +1,4 @@
-import json, time, urllib.request, datetime
+import json, urllib.request, urllib.parse, datetime
 
 symbols = {"gold":"GC=F", "silver":"SI=F"}
 out = {"updated_at": datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), "source_type":"自动行情接口参考"}
@@ -11,7 +11,7 @@ for key, symbol in symbols.items():
         meta = result['meta']
         price = meta.get('regularMarketPrice') or meta.get('previousClose')
         out[key] = {'symbol': symbol, 'price': float(price), 'label':'自动更新国际现货/期货参考'}
-    except Exception as e:
+    except Exception:
         out[key] = {'symbol': symbol, 'price': None, 'label':'暂不可用'}
 with open('metals.json','w',encoding='utf-8') as f:
     json.dump(out,f,ensure_ascii=False,indent=2)
