@@ -1,0 +1,6 @@
+{
+  "updated_at": "2026-08-13 12:00 UTC",
+  "source_type": "自动行情接口参考",
+  "gold": {"symbol": "XAUUSD", "price": 4408.55, "label": "最近可用国际现货参考"},
+  "silver": {"symbol": "XAGUSD", "price": 65.47, "label": "最近可用国际现货参考"}
+}
