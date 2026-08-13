@@ -53,6 +53,27 @@ jobs:
           print('首页钱币图片路径已修复')
           PY
 
+      - name: 修正城市服务与鉴定免责声明
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('福建泉州 · 厦门 · 福州 ·成都 当天评估鉴定', '泉州 · 厦门 · 福州 · 成都 当天评估鉴定')
+          s = s.replace('泉州、厦门、福州及福建省内地区，可提前预约安排<strong>当天上门评估、鉴定、价格分析</strong>。', '泉州、厦门、福州及福建省内地区，可提前预约安排<strong>当天上门评估、鉴定、价格分析</strong>；成都可提前预约当地面对面服务。')
+          if '成都 Chengdu' not in s:
+              needle = '<div class="city-card"><b>福州 Fuzhou</b><strong>✓ 当天可预约</strong><span>鉴定 · 估价 · 市场分析</span></div>'
+              add = needle + '<div class="city-card"><b>成都 Chengdu</b><strong>✓ 可预约服务</strong><span>鉴定 · 估价 · 市场分析</span></div>'
+              s = s.replace(needle, add, 1)
+          exact = 'AI鉴定结果仅作为收藏研究和价格参考，不作为法律意义上的鉴定结论。'
+          if exact not in s:
+              anchor = '<div class="notice">AI分析和价格仅作收藏研究参考，不替代实物专业鉴定，也不保证成交价格。</div>'
+              replacement = anchor + '<div class="notice">⚠️ ' + exact + '</div>'
+              s = s.replace(anchor, replacement, 1)
+          p.write_text(s, encoding='utf-8')
+          print('城市服务与AI鉴定免责声明已修正')
+          PY
+
       - name: 注入真实钱币实物图鉴
         run: python inject_real_coin_gallery.py
 
@@ -66,7 +87,25 @@ jobs:
         run: python market_update.py
 
       - name: 注入成交价格图片点击查看功能
-        run: python inject_market_images.py
+        run: python inject_market_images_v2.py
+
+      - name: 检查关键网页资源
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          root = Path('.')
+          html = (root / 'index.html').read_text(encoding='utf-8')
+          required = ['index.html', 'ai_appraisal.html', 'market-data.json', 'news-data.json']
+          missing = [x for x in required if not (root / x).exists()]
+          if missing:
+              raise SystemExit('缺少关键文件: ' + ', '.join(missing))
+          bad = sorted(set(re.findall(r'(?:src|href)=[\"\']([^\"\']+)[\"\']', html)))
+          bad = [x for x in bad if x.startswith('assets/') and not (root / x.split('?',1)[0]).exists()]
+          if bad:
+              raise SystemExit('发现不存在的本地资源: ' + ', '.join(bad[:20]))
+          print('关键网页资源检查通过')
+          PY
 
       - name: 自动提交每日数据与本地图片
         run: |
