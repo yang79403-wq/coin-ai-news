@@ -39,7 +39,6 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          # 所有替换目标都指向仓库中已确认存在的本地实物图片，避免 Pages 出现裂图。
           replacements = {
               'assets/coins/rare-xianfeng.jpg': 'assets/coins/cash-coins-a.jpg',
               'assets/coins/yuan-silver.jpg': 'assets/coins/yuan-3-obverse.jpg',
@@ -47,7 +46,6 @@ jobs:
               'assets/coins/banknote.jpg': 'assets/coins/rmb1-100-1b.jpg',
               'assets/coins/commemorative.jpg': 'assets/coins/founding-commemorative.jpg',
               'assets/coins/gold-silver.jpg': 'assets/coins/panda-2016-reverse.png',
-              # 旧版真实图鉴脚本曾引用但仓库不存在的文件，统一改为现有镜像资源。
               'assets/coins/yuan-3-reverse.jpg': 'assets/coins/yuan-1921-iii.png',
               'assets/coins/kangxi-tongbao.jpg': 'assets/coins/cash-coins-a.jpg',
               'assets/coins/qianlong-tongbao.jpg': 'assets/coins/cash-coins-a.jpg',
@@ -81,6 +79,9 @@ jobs:
           print('城市服务与AI鉴定免责声明已修正')
           PY
 
+      - name: 移除前台AI对话与搜索功能
+        run: python remove_ai_chat.py
+
       - name: 注入真实钱币实物图鉴
         run: python inject_real_coin_gallery.py
 
@@ -111,13 +112,15 @@ jobs:
           bad = [x for x in refs if x.startswith('assets/') and not (root / x.split('?',1)[0]).exists()]
           if bad:
               raise SystemExit('发现不存在的本地资源: ' + ', '.join(bad[:20]))
+          if re.search(r'coin-ai-search|ai-chat|问问币智通|AI智能搜索', html, re.I):
+              raise SystemExit('前台AI对话/搜索残留未清除')
           print(f'关键网页资源检查通过，共检查 {len(refs)} 个 src/href 引用')
           PY
 
       - name: 自动提交每日数据与本地图片
         run: |
-          git config --global user.name "币智通AI"
+          git config --global user.name "洪盛集藏网"
           git config --global user.email "actions@github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "AI自动更新钱币资讯行情与真实钱币图鉴"
+          git diff --cached --quiet || git commit -m "移除前台AI对话功能并保持资讯自动更新"
           git push
