@@ -39,6 +39,9 @@ jobs:
       - name: 采集指定公开钱币市场数据
         run: python market_update.py
 
+      - name: 注入成交价格图片点击查看功能
+        run: python inject_market_images.py
+
       - name: 自动提交每日数据与本地图片
         run: |
           git config --global user.name "币智通AI"
