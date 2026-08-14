@@ -21,6 +21,9 @@ jobs:
       - name: 注入福建钱币特色版块与中国网站资料索引
         run: python inject_fujian_home.py
 
+      - name: 更新福建专题为中国大陆网站优先来源
+        run: python refresh_fujian_cn_sources.py
+
       - name: 检查HTML基础结构
         run: |
           python - <<'PY'
@@ -32,17 +35,21 @@ jobs:
               raise SystemExit('HTML检查失败: '+', '.join(missing))
           if 'coin-ai-search-css' in s or 'COIN_AI_SEARCH_V1' in s or 'coin-ai-chat-script' in s:
               raise SystemExit('前台AI对话模块仍存在，停止发布')
-          print('HTML检查通过')
+          f=Path('fujian.html').read_text(encoding='utf-8')
+          for bad in ['tcmb.culture.tw','collections.culture.tw']:
+              if bad in f:
+                  raise SystemExit('福建专题仍存在非中国大陆来源: '+bad)
+          print('HTML与福建来源检查通过')
           PY
 
       - name: 提交视觉升级
         run: |
           git config user.name 'hongsheng-collection-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add index.html visual_refresh.py inject_fujian_home.py fujian.html data/fujian-coins.json data/fujian-china-sources.json
+          git add index.html visual_refresh.py inject_fujian_home.py refresh_fujian_cn_sources.py fujian.html data/fujian-coins.json data/fujian-china-sources.json
           if git diff --cached --quiet; then
             echo '无需更新'
             exit 0
           fi
-          git commit -m 'style: add Fujian China-source index [skip ci]'
+          git commit -m 'style: use China websites for Fujian coin sources [skip ci]'
           git push
