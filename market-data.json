@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-14T03:36:55.334503+00:00",
+  "updated_at": "2026-08-14T04:04:58.451258+00:00",
   "scope": "一尘网、钱币天堂、华夏古泉公开成交/结标页面",
-  "data_policy": "挂牌价、当前竞价、求购价、流标记录均不作为成交价；必须保存原始商品/拍品链接、同页实物图和明确成交语义。",
+  "data_policy": "只接受原始商品/拍品页面明确成交/结标、明确成交价格、同页实物图和原帖链接；挂牌价、当前竞价、流拍、求购、收购价均排除。",
   "sources": [
     {
       "provider_id": "yichen",
@@ -12,7 +12,8 @@
         "https://www1.pm001.net/index.asp",
         "https://www2.pm001.net/index.asp",
         "https://www3.pm001.net/index.asp"
-      ]
+      ],
+      "proxy": true
     },
     {
       "provider_id": "yy11",
@@ -20,7 +21,8 @@
       "url": "https://www.yy11.com/c2c/forum/4.html",
       "seeds": [
         "https://www.yy11.com/c2c/forum/4.html"
-      ]
+      ],
+      "proxy": false
     },
     {
       "provider_id": "huaxia",
@@ -28,9 +30,9 @@
       "url": "https://www.hxguquan.com/",
       "seeds": [
         "https://www.hxguquan.com/",
-        "https://wwwn.hxguquan.com/",
         "https://www.hxguquan.com/goods-list.html?gid=76167"
-      ]
+      ],
+      "proxy": false
     }
   ],
   "rows": [],
@@ -39,46 +41,42 @@
       "provider_id": "yichen",
       "source_name": "一尘网",
       "source_url": "https://www.pm001.net/index.asp",
-      "used_seed": null,
-      "pages": 0,
+      "pages": 4,
       "candidate_detail_pages": 0,
       "rows": 0,
-      "ok": false,
-      "errors": [
-        "ConnectionError: HTTPSConnectionPool(host='www.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www.pm001.net', port=443): Faile",
-        "ConnectTimeout: HTTPSConnectionPool(host='www1.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by ConnectTimeoutError(<HTTPSConnection(host='www1.pm001.net', port=443) at ",
-        "ConnectionError: HTTPSConnectionPool(host='www2.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www2.pm001.net', port=443): Fai",
-        "ConnectTimeout: HTTPSConnectionPool(host='www3.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by ConnectTimeoutError(<HTTPSConnection(host='www3.pm001.net', port=443) at "
-      ]
+      "proxy_used": true,
+      "rejected": [],
+      "errors": [],
+      "ok": true
     },
     {
       "provider_id": "yy11",
       "source_name": "钱币天堂",
       "source_url": "https://www.yy11.com/c2c/forum/4.html",
-      "used_seed": "https://www.yy11.com/c2c/forum/4.html",
       "pages": 1,
-      "candidate_detail_pages": 1,
+      "candidate_detail_pages": 0,
       "rows": 0,
-      "ok": true,
-      "errors": []
+      "proxy_used": false,
+      "rejected": [],
+      "errors": [],
+      "ok": true
     },
     {
       "provider_id": "huaxia",
       "source_name": "华夏古泉",
       "source_url": "https://www.hxguquan.com/",
-      "used_seed": "https://www.hxguquan.com/",
-      "pages": 3,
+      "pages": 2,
       "candidate_detail_pages": 0,
       "rows": 0,
-      "ok": true,
-      "errors": []
+      "proxy_used": false,
+      "rejected": [],
+      "errors": [],
+      "ok": true
     }
   ],
   "verification": {
-    "policy": "原始商品/拍品页面确认成交状态、成交价格，并从同一页面取得实物图片后才入库。",
     "verified_count": 0,
-    "rejected_count": 0,
-    "rejected": [],
-    "verified_at": "2026-08-14T03:36:55.334485+00:00"
+    "policy": "原帖链接 + 同页实物图片 + 明确成交/结标状态 + 成交价格",
+    "verified_at": "2026-08-14T04:04:58.451282+00:00"
   }
 }
