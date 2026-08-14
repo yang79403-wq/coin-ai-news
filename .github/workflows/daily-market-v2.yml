@@ -1,13 +1,11 @@
 name: 洪盛集藏网每日成交行情 V4
 
 on:
-  push:
-    paths:
-      - '.github/workflows/daily-market-v2.yml'
-      - 'publish_home_v4.py'
-      - 'market_update_v3.py'
   schedule:
-    - cron: '20 0 * * *'
+    - cron: '20 8 * * *'
+      timezone: 'Asia/Shanghai'
+    - cron: '20 20 * * *'
+      timezone: 'Asia/Shanghai'
   workflow_dispatch:
 
 permissions:
