@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-14T03:29:25.535661+00:00",
-  "scope": "一尘网、钱币天堂、华夏古泉公开成交页面",
-  "data_policy": "仅收录能够同时关联到原始商品/拍品链接、该条目原始实物图片和明确成交价格的公开记录；不把挂牌价、求购价或进行中的竞价当作成交价。",
+  "updated_at": "2026-08-14T03:36:55.334503+00:00",
+  "scope": "一尘网、钱币天堂、华夏古泉公开成交/结标页面",
+  "data_policy": "挂牌价、当前竞价、求购价、流标记录均不作为成交价；必须保存原始商品/拍品链接、同页实物图和明确成交语义。",
   "sources": [
     {
       "provider_id": "yichen",
@@ -11,11 +11,7 @@
         "https://www.pm001.net/index.asp",
         "https://www1.pm001.net/index.asp",
         "https://www2.pm001.net/index.asp",
-        "https://www3.pm001.net/index.asp",
-        "http://www.pm001.net/index.asp",
-        "http://www1.pm001.net/index.asp",
-        "http://www2.pm001.net/index.asp",
-        "http://www3.pm001.net/index.asp"
+        "https://www3.pm001.net/index.asp"
       ]
     },
     {
@@ -23,9 +19,7 @@
       "source_name": "钱币天堂",
       "url": "https://www.yy11.com/c2c/forum/4.html",
       "seeds": [
-        "https://www.yy11.com/c2c/forum/4.html",
-        "https://www.yy11.com/c2c/forum/4.html#1",
-        "https://www.yy11.com/c2c"
+        "https://www.yy11.com/c2c/forum/4.html"
       ]
     },
     {
@@ -40,33 +34,16 @@
     }
   ],
   "rows": [],
-  "summary": [
-    {
-      "category": "其他",
-      "name": "其它卡类卖场除田村卡IC卡以外的其它卡类卖场....[投资资讯网交易在线]",
-      "min": 2026.0,
-      "median": 2026.0,
-      "max": 2026.0,
-      "samples": 1
-    },
-    {
-      "category": "其他",
-      "name": "编年版票专栏编年版票在线交易专栏。....[投资资讯网交易在线]",
-      "min": 9.0,
-      "median": 9.0,
-      "max": 9.0,
-      "samples": 1
-    }
-  ],
   "status": [
     {
       "provider_id": "yichen",
       "source_name": "一尘网",
       "source_url": "https://www.pm001.net/index.asp",
-      "used_seed": "http://www.pm001.net/index.asp",
-      "ok": true,
-      "pages": 4,
-      "rows": 2,
+      "used_seed": null,
+      "pages": 0,
+      "candidate_detail_pages": 0,
+      "rows": 0,
+      "ok": false,
       "errors": [
         "ConnectionError: HTTPSConnectionPool(host='www.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www.pm001.net', port=443): Faile",
         "ConnectTimeout: HTTPSConnectionPool(host='www1.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by ConnectTimeoutError(<HTTPSConnection(host='www1.pm001.net', port=443) at ",
@@ -79,9 +56,10 @@
       "source_name": "钱币天堂",
       "source_url": "https://www.yy11.com/c2c/forum/4.html",
       "used_seed": "https://www.yy11.com/c2c/forum/4.html",
-      "ok": true,
-      "pages": 3,
+      "pages": 1,
+      "candidate_detail_pages": 1,
       "rows": 0,
+      "ok": true,
       "errors": []
     },
     {
@@ -89,28 +67,18 @@
       "source_name": "华夏古泉",
       "source_url": "https://www.hxguquan.com/",
       "used_seed": "https://www.hxguquan.com/",
-      "ok": true,
       "pages": 3,
+      "candidate_detail_pages": 0,
       "rows": 0,
+      "ok": true,
       "errors": []
     }
   ],
   "verification": {
     "policy": "原始商品/拍品页面确认成交状态、成交价格，并从同一页面取得实物图片后才入库。",
     "verified_count": 0,
-    "rejected_count": 2,
-    "rejected": [
-      {
-        "name": "编年版票专栏编年版票在线交易专栏。....[投资资讯网交易在线]",
-        "item_url": "http://www.pm001.net/index.asp?boardid=159",
-        "error": "no_confirmed_transaction"
-      },
-      {
-        "name": "其它卡类卖场除田村卡IC卡以外的其它卡类卖场....[投资资讯网交易在线]",
-        "item_url": "http://www.pm001.net/index.asp?boardid=185",
-        "error": "no_confirmed_transaction"
-      }
-    ],
-    "verified_at": "2026-08-14T03:29:25.535623+00:00"
+    "rejected_count": 0,
+    "rejected": [],
+    "verified_at": "2026-08-14T03:36:55.334485+00:00"
   }
 }
