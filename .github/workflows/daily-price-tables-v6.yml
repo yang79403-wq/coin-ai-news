@@ -1,6 +1,12 @@
 name: 洪盛集藏网每日钱币成交求购价格表 V6 全版块采集
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'market_update_v6.py'
+      - '.github/workflows/daily-price-tables-v6.yml'
   schedule:
     - cron: '17 8 * * *'
       timezone: 'Asia/Shanghai'
