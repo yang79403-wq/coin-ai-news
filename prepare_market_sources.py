@@ -32,5 +32,17 @@ new_s, n = re.subn(pattern, replacement.rstrip(), s, count=1, flags=re.S)
 if n != 1:
     raise SystemExit('SOURCES block not found; refusing to modify market_update.py')
 
+# The old generic link filter missed actual YY11 /c2c/topic/<id>.html links
+# and legacy Yichen board/discussion links. Add only URL markers; same-host
+# restriction remains in market_update.py.
+new_s, n2 = re.subn(
+    r'"topic\.cgi","dispbbs\.asp"\)',
+    '"topic.cgi","dispbbs.asp","/c2c/topic/","boardid=","boardID=","/c2c/forum/")',
+    new_s,
+    count=1,
+)
+if n2 != 1:
+    raise SystemExit('link-key marker not found; refusing to modify market_update.py')
+
 p.write_text(new_s, encoding='utf-8')
-print('market sources updated: 一尘网多入口 + 钱币天堂成交价栏目 /c2c/forum/4.html')
+print('market sources updated: 一尘网多入口 + 钱币天堂 /c2c/forum/4.html + topic/ detail links')
