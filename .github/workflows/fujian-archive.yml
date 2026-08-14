@@ -7,11 +7,6 @@ on:
     - cron: '35 13 * * *'
       timezone: 'Asia/Shanghai'
   workflow_dispatch:
-  push:
-    paths:
-      - 'fujian_archive_collect.py'
-      - 'data/fujian-coins.json'
-      - '.github/workflows/fujian-archive.yml'
 
 permissions:
   contents: write
