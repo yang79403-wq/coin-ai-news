@@ -18,7 +18,7 @@ jobs:
       - name: 执行古韵视觉升级并清理前台AI对话
         run: python visual_refresh.py
 
-      - name: 注入福建钱币特色版块
+      - name: 注入福建钱币特色版块与中国网站资料索引
         run: python inject_fujian_home.py
 
       - name: 检查HTML基础结构
@@ -26,7 +26,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           s=Path('index.html').read_text(encoding='utf-8')
-          required=['<html','<head>','</head>','<body>','</body>','洪盛集藏网','hongsheng-heritage-theme','HONGSHENG_FUJIAN_SECTION_V1']
+          required=['<html','<head>','</head>','<body>','</body>','洪盛集藏网','hongsheng-heritage-theme','HONGSHENG_FUJIAN_SECTION_V1','HONGSHENG_FUJIAN_CHINA_SOURCES_V1']
           missing=[x for x in required if x not in s]
           if missing:
               raise SystemExit('HTML检查失败: '+', '.join(missing))
@@ -39,10 +39,10 @@ jobs:
         run: |
           git config user.name 'hongsheng-collection-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add index.html visual_refresh.py inject_fujian_home.py fujian.html data/fujian-coins.json
+          git add index.html visual_refresh.py inject_fujian_home.py fujian.html data/fujian-coins.json data/fujian-china-sources.json
           if git diff --cached --quiet; then
             echo '无需更新'
             exit 0
           fi
-          git commit -m 'style: add Fujian coin heritage section [skip ci]'
+          git commit -m 'style: add Fujian China-source index [skip ci]'
           git push
