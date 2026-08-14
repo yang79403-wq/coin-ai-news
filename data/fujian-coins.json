@@ -1,0 +1,50 @@
+{
+  "updated": "2026-08-14",
+  "title": "洪盛集藏·福建钱币资料库",
+  "notice": "资料用于公益学习、收藏研究与交流。图片优先采用开放授权馆藏或来源页，不默认转载受版权保护的图片。",
+  "categories": ["福建铜元", "福建银元", "福建纸币", "福建铸币历史", "福建成交行情"],
+  "records": [
+    {
+      "name": "福建官局造光绪元宝当十铜元",
+      "category": "福建铜元",
+      "period": "光绪二十六年至三十一年（1900-1905）",
+      "denomination": "当十文",
+      "diameter": "2.8厘米",
+      "weight": "7.55克",
+      "features": "面文福建官局造、光绪元宝、每枚当钱十文；中心满文宝福；背面蟠龙，英文FOO-KIEN、10 CASHES。",
+      "source": "中国国家博物馆",
+      "source_url": "https://www.chnmuseum.cn/zp/zpml/hb/202106/t20210610_250327.shtml",
+      "image_policy": "来源页查看馆藏图片，使用前核验页面授权条款。"
+    },
+    {
+      "name": "福建官局造壹毫银币",
+      "category": "福建银元",
+      "period": "民国时期（馆藏资料标注1912-1949）",
+      "denomination": "壹毫",
+      "features": "面文福建官局造、壹毫银币、库平七分二厘；背面10及FOO-KIEN PROVINCE等英文。",
+      "source": "国家文化记忆库·国立历史博物馆",
+      "source_url": "https://collections.culture.tw/Object?RNO=MjU4ODQ%3D&SYSUID=14",
+      "image_policy": "页面标注CC BY，实际使用时保留署名及来源信息。"
+    },
+    {
+      "name": "福建官局造光绪元宝银币",
+      "category": "福建银元",
+      "period": "清末",
+      "denomination": "库平七钱二分及银辅币体系",
+      "features": "福建官局造银币体系，适合进一步建立面额、版别、试铸与存世资料档案。",
+      "source": "公开钱币研究资料",
+      "source_url": "https://nicecasio.pixnet.net/blog/post/576241936",
+      "image_policy": "仅作研究线索，图片不直接转载，优先建立来源页链接。"
+    },
+    {
+      "name": "福建闽关铜元",
+      "category": "福建铜元",
+      "period": "光绪三十年至三十一年左右",
+      "denomination": "当十文",
+      "features": "闽海关铜币局铸造；公开研究资料记录有大闽关、小闽关、异刻闽关、斜闽关、高低闽关等版式。",
+      "source": "福建日报数字报 / 国家文化记忆相关资料",
+      "source_url": "https://fjrb.fjdaily.com/pc/con/202509/09/content_476352.html",
+      "image_policy": "来源页研究使用，后续仅接入明确授权或自有图片。"
+    }
+  ]
+}
