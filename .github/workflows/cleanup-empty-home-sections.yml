@@ -1,0 +1,80 @@
+name: 清理首页无效版块并发布
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 清理首页空内容版块
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+
+          # 当前成交数据库没有经过核验的记录时，删除首页静态占位行情区。
+          s = re.sub(
+              r'<section id="market" class="section">.*?</section>\s*',
+              '', s, count=1, flags=re.S
+          )
+
+          # 真实成交模块只有在 market-data.json 有有效 rows 时才显示。
+          marker = 'var rows=d.rows||[];'
+          replacement = '''var rows=d.rows||[];if(!rows.length){var emptyMarket=document.querySelector('.market-live');if(emptyMarket)emptyMarket.remove();var marketNav=document.querySelector('.nav a[href="#market"]');if(marketNav)marketNav.remove();return;}'''
+          if marker in s and replacement not in s:
+              s = s.replace(marker, replacement, 1)
+
+          # 避免已经没有成交数据时导航栏留下空入口。
+          p.write_text(s, encoding="utf-8")
+
+      - name: 检查首页
+        run: |
+          test -s index.html
+          grep -q '洪盛集藏网' index.html
+          grep -q '福建钱币' index.html
+          if grep -q 'id="market"' index.html; then
+            echo 'ERROR: empty static market section still exists'
+            exit 1
+          fi
+
+      - name: 提交整理结果
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'NO_CHANGES=true' >> "$GITHUB_ENV"
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add index.html
+            git commit -m 'chore: remove empty homepage sections'
+            git push
+            echo 'NO_CHANGES=false' >> "$GITHUB_ENV"
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
