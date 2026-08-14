@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-14T03:14:30.544472+00:00",
+  "updated_at": "2026-08-14T03:29:25.535661+00:00",
   "scope": "一尘网、钱币天堂、华夏古泉公开成交页面",
   "data_policy": "仅收录能够同时关联到原始商品/拍品链接、该条目原始实物图片和明确成交价格的公开记录；不把挂牌价、求购价或进行中的竞价当作成交价。",
   "sources": [
@@ -10,17 +10,22 @@
       "seeds": [
         "https://www.pm001.net/index.asp",
         "https://www1.pm001.net/index.asp",
-        "https://www2.pm001.net/index.asp"
+        "https://www2.pm001.net/index.asp",
+        "https://www3.pm001.net/index.asp",
+        "http://www.pm001.net/index.asp",
+        "http://www1.pm001.net/index.asp",
+        "http://www2.pm001.net/index.asp",
+        "http://www3.pm001.net/index.asp"
       ]
     },
     {
       "provider_id": "yy11",
       "source_name": "钱币天堂",
-      "url": "https://www.yy11.com/htm/shop.cgi",
+      "url": "https://www.yy11.com/c2c/forum/4.html",
       "seeds": [
-        "https://www.yy11.com/htm/shop.cgi",
-        "http://www.yy11.com/htm/shop.cgi",
-        "https://www.yy11.com/"
+        "https://www.yy11.com/c2c/forum/4.html",
+        "https://www.yy11.com/c2c/forum/4.html#1",
+        "https://www.yy11.com/c2c"
       ]
     },
     {
@@ -35,27 +40,45 @@
     }
   ],
   "rows": [],
-  "summary": [],
+  "summary": [
+    {
+      "category": "其他",
+      "name": "其它卡类卖场除田村卡IC卡以外的其它卡类卖场....[投资资讯网交易在线]",
+      "min": 2026.0,
+      "median": 2026.0,
+      "max": 2026.0,
+      "samples": 1
+    },
+    {
+      "category": "其他",
+      "name": "编年版票专栏编年版票在线交易专栏。....[投资资讯网交易在线]",
+      "min": 9.0,
+      "median": 9.0,
+      "max": 9.0,
+      "samples": 1
+    }
+  ],
   "status": [
     {
       "provider_id": "yichen",
       "source_name": "一尘网",
       "source_url": "https://www.pm001.net/index.asp",
-      "used_seed": null,
-      "ok": false,
-      "pages": 0,
-      "rows": 0,
+      "used_seed": "http://www.pm001.net/index.asp",
+      "ok": true,
+      "pages": 4,
+      "rows": 2,
       "errors": [
         "ConnectionError: HTTPSConnectionPool(host='www.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www.pm001.net', port=443): Faile",
         "ConnectTimeout: HTTPSConnectionPool(host='www1.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by ConnectTimeoutError(<HTTPSConnection(host='www1.pm001.net', port=443) at ",
-        "ConnectionError: HTTPSConnectionPool(host='www2.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www2.pm001.net', port=443): Fai"
+        "ConnectionError: HTTPSConnectionPool(host='www2.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by NewConnectionError(\"HTTPSConnection(host='www2.pm001.net', port=443): Fai",
+        "ConnectTimeout: HTTPSConnectionPool(host='www3.pm001.net', port=443): Max retries exceeded with url: /index.asp (Caused by ConnectTimeoutError(<HTTPSConnection(host='www3.pm001.net', port=443) at "
       ]
     },
     {
       "provider_id": "yy11",
       "source_name": "钱币天堂",
-      "source_url": "https://www.yy11.com/htm/shop.cgi",
-      "used_seed": "https://www.yy11.com/htm/shop.cgi",
+      "source_url": "https://www.yy11.com/c2c/forum/4.html",
+      "used_seed": "https://www.yy11.com/c2c/forum/4.html",
       "ok": true,
       "pages": 3,
       "rows": 0,
@@ -73,8 +96,21 @@
     }
   ],
   "verification": {
-    "policy": "只有打开原始商品/拍品页面后再次确认成交状态、成交价格，并从同一页面取得实物图片的记录才进入价格表。",
+    "policy": "原始商品/拍品页面确认成交状态、成交价格，并从同一页面取得实物图片后才入库。",
     "verified_count": 0,
-    "verified_at": "2026-08-14T03:14:30.544496+00:00"
+    "rejected_count": 2,
+    "rejected": [
+      {
+        "name": "编年版票专栏编年版票在线交易专栏。....[投资资讯网交易在线]",
+        "item_url": "http://www.pm001.net/index.asp?boardid=159",
+        "error": "no_confirmed_transaction"
+      },
+      {
+        "name": "其它卡类卖场除田村卡IC卡以外的其它卡类卖场....[投资资讯网交易在线]",
+        "item_url": "http://www.pm001.net/index.asp?boardid=185",
+        "error": "no_confirmed_transaction"
+      }
+    ],
+    "verified_at": "2026-08-14T03:29:25.535623+00:00"
   }
 }
