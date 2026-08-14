@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
+      - name: Prepare verified source entry points
+        run: python prepare_market_sources.py
+
       - name: Collect source-linked transactions
         run: python market_update.py
 
