@@ -1,4 +1,4 @@
-name: 洪盛集藏网每日成交行情 V2
+name: 洪盛集藏网每日成交行情 V3
 
 on:
   schedule:
@@ -30,11 +30,8 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Prepare verified source entry points
-        run: python prepare_market_sources.py
-
-      - name: Collect source-linked transactions
-        run: python market_update.py
+      - name: Collect V3 dedicated source-linked transactions
+        run: python market_update_v3.py
 
       - name: Verify original item pages
         run: python verify_market_data.py
@@ -44,9 +41,9 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from datetime import date
+          import re
           p=Path('sitemap.xml')
           s=p.read_text(encoding='utf-8')
-          import re
           s=re.sub(r'<lastmod>[^<]+</lastmod>', f'<lastmod>{date.today().isoformat()}</lastmod>', s, count=1)
           p.write_text(s, encoding='utf-8')
           print('sitemap lastmod:', date.today().isoformat())
@@ -64,7 +61,7 @@ jobs:
               raise SystemExit(f'invalid rows: {len(bad)}')
           print('verified rows:', len(rows))
           for s in d.get('status',[]):
-              print(s.get('source_name'), 'pages=', s.get('pages'), 'rows=', s.get('rows'), 'ok=', s.get('ok'))
+              print(s.get('source_name'), 'pages=', s.get('pages'), 'candidate=', s.get('candidate_detail_pages'), 'rows=', s.get('rows'), 'ok=', s.get('ok'), 'errors=', s.get('errors'))
           PY
 
       - name: Safely publish generated files
@@ -75,7 +72,6 @@ jobs:
           cp market-data.json /tmp/hongsheng-generated/market-data.json
           cp index.html /tmp/hongsheng-generated/index.html
           cp sitemap.xml /tmp/hongsheng-generated/sitemap.xml
-
           for attempt in 1 2 3; do
             git fetch origin main
             git reset --hard origin/main
@@ -85,16 +81,9 @@ jobs:
             git config user.name '洪盛集藏网'
             git config user.email 'actions@github.com'
             git add market-data.json index.html sitemap.xml
-            if git diff --cached --quiet; then
-              echo 'No generated changes to publish.'
-              exit 0
-            fi
-            git commit -m 'data: publish verified coin transaction prices'
-            if git push origin HEAD:main; then
-              echo 'Publish succeeded on attempt' "$attempt"
-              exit 0
-            fi
-            echo 'Push conflicted; retrying with latest main.'
+            if git diff --cached --quiet; then echo 'No generated changes to publish.'; exit 0; fi
+            git commit -m 'data: publish V3 verified coin transaction prices'
+            if git push origin HEAD:main; then echo "Publish succeeded on attempt $attempt"; exit 0; fi
             sleep 3
           done
           echo 'Unable to publish after 3 attempts.'
