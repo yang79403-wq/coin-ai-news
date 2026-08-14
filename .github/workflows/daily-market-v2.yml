@@ -1,6 +1,11 @@
-name: 洪盛集藏网每日成交行情 V3
+name: 洪盛集藏网每日成交行情 V4
 
 on:
+  push:
+    paths:
+      - '.github/workflows/daily-market-v2.yml'
+      - 'publish_home_v4.py'
+      - 'market_update_v3.py'
   schedule:
     - cron: '20 0 * * *'
   workflow_dispatch:
@@ -30,11 +35,28 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Collect V3 dedicated source-linked transactions
+      - name: Use HTTP primary endpoint for 一尘网
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('market_update_v3.py')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('https://www.pm001.net/index.asp', 'http://www.pm001.net/index.asp')
+          s=s.replace('https://www1.pm001.net/index.asp', 'http://www1.pm001.net/index.asp')
+          s=s.replace('https://www2.pm001.net/index.asp', 'http://www2.pm001.net/index.asp')
+          s=s.replace('https://www3.pm001.net/index.asp', 'http://www3.pm001.net/index.asp')
+          p.write_text(s, encoding='utf-8')
+          print('一尘网 primary/backup endpoints set to HTTP')
+          PY
+
+      - name: Collect V4 source-linked transactions
         run: python market_update_v3.py
 
       - name: Verify original item pages
         run: python verify_market_data.py
+
+      - name: Make generated market data public
+        run: python publish_home_v4.py
 
       - name: Update sitemap lastmod
         run: |
@@ -68,21 +90,23 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/hongsheng-generated
+          mkdir -p /tmp/hongsheng-generated/data
           cp market-data.json /tmp/hongsheng-generated/market-data.json
+          cp data/market.json /tmp/hongsheng-generated/data/market.json
           cp index.html /tmp/hongsheng-generated/index.html
           cp sitemap.xml /tmp/hongsheng-generated/sitemap.xml
           for attempt in 1 2 3; do
             git fetch origin main
             git reset --hard origin/main
             cp /tmp/hongsheng-generated/market-data.json market-data.json
+            cp /tmp/hongsheng-generated/data/market.json data/market.json
             cp /tmp/hongsheng-generated/index.html index.html
             cp /tmp/hongsheng-generated/sitemap.xml sitemap.xml
             git config user.name '洪盛集藏网'
             git config user.email 'actions@github.com'
-            git add market-data.json index.html sitemap.xml
+            git add market-data.json data/market.json index.html sitemap.xml
             if git diff --cached --quiet; then echo 'No generated changes to publish.'; exit 0; fi
-            git commit -m 'data: publish V3 verified coin transaction prices'
+            git commit -m 'data: publish V4 market data to homepage'
             if git push origin HEAD:main; then echo "Publish succeeded on attempt $attempt"; exit 0; fi
             sleep 3
           done
