@@ -1,20 +1,32 @@
 {
   "updated": "2026-08-14",
   "title": "洪盛集藏·福建钱币资料库",
-  "notice": "资料用于公益学习、收藏研究与交流。图片优先采用开放授权馆藏或来源页，不默认转载受版权保护的图片。",
-  "categories": ["福建铜元", "福建银元", "福建纸币", "福建铸币历史", "福建成交行情"],
+  "notice": "仅供公益学习、收藏研究与交流；价格行情不属于本专题。图片优先使用明确开放授权馆藏或自有/获授权图片。",
+  "categories": [
+    "福建铜元",
+    "福建银元",
+    "福建纸币",
+    "福建地方货币",
+    "福建铸币历史"
+  ],
   "records": [
     {
       "name": "福建官局造光绪元宝当十铜元",
       "category": "福建铜元",
-      "period": "光绪二十六年至三十一年（1900-1905）",
+      "period": "1900-1905",
       "denomination": "当十文",
       "diameter": "2.8厘米",
       "weight": "7.55克",
-      "features": "面文福建官局造、光绪元宝、每枚当钱十文；中心满文宝福；背面蟠龙，英文FOO-KIEN、10 CASHES。",
+      "features": "中国国家博物馆官方网站",
       "source": "中国国家博物馆",
       "source_url": "https://www.chnmuseum.cn/zp/zpml/hb/202106/t20210610_250327.shtml",
-      "image_policy": "来源页查看馆藏图片，使用前核验页面授权条款。"
+      "image_policy": "来源页查看馆藏图片，使用前核验页面授权条款。",
+      "url": "https://www.chnmuseum.cn/zp/zpml/hb/202106/t20210610_250327.shtml",
+      "license": "来源页资料；图片使用前核验授权",
+      "page_title": "福建官局造光绪元宝当十铜元_中国国家博物馆官方网站",
+      "source_image_url": "",
+      "image_license": "来源页资料；图片使用前核验授权",
+      "image_status": "source-only"
     },
     {
       "name": "福建官局造壹毫银币",
@@ -45,6 +57,90 @@
       "source": "福建日报数字报 / 国家文化记忆相关资料",
       "source_url": "https://fjrb.fjdaily.com/pc/con/202509/09/content_476352.html",
       "image_policy": "来源页研究使用，后续仅接入明确授权或自有图片。"
+    },
+    {
+      "name": "福建官局造光绪元宝十文",
+      "category": "福建铜元",
+      "period": "1901-1905",
+      "source": "国家文化记忆库·国立历史博物馆",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=14000113139&indexCode=MOCCOLLECTIONS",
+      "license": "CC BY 3.0 TW，保留署名与来源",
+      "page_title": "福建官局造光緒元寶十文｜國家文化記憶庫",
+      "features": "國立歷史博物館藏《福建官局造光緒元寶十文》（館藏編號10073），幣面中央珠圈內為「光緒元寶」四字對讀，其間應有滿文，珠圈外上環「福建官局造」，下環「每枚當錢十文」，左右分別應為「閩」、「關」各一字，錢背中央珠圈內為正面蟠龍，珠圈外應環有「F.K. CUSTOM HOUSE」、「10CASH」等英文",
+      "source_image_url": "http://data-service/api/collection/image/MOCCOLLECTIONS?uid=14000113139",
+      "image_license": "CC BY 3.0 TW，保留署名与来源",
+      "image_status": "source-only: ConnectionError",
+      "source_url": "https://tcmb.culture.tw/zh-tw/detail?id=14000113139&indexCode=MOCCOLLECTIONS"
+    },
+    {
+      "name": "福建官局造光绪元宝库平三分六厘",
+      "category": "福建银元",
+      "period": "1900-1908",
+      "source": "国家文化记忆库·国立历史博物馆",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=14000128171&indexCode=MOCCOLLECTIONS",
+      "license": "CC BY 3.0 TW，保留署名与来源",
+      "page_title": "福建官局造光緒元寶庫平三分六厘｜國家文化記憶庫",
+      "features": "國立歷史博物館藏《福建省造光緒元寶庫平三分六釐》（館藏編號25503），幣面珠圈內有「光緒元寶」漢滿文對讀，上環「福建省造」，下環幣值「庫平三分六釐」，左右兩側各有四瓣花圖案，幣緣具內齒，錢背中央應為一正面蟠龍，惟幣況不佳，除蟠龍略有輪廓之外，其餘難以辨識，幣邊為齒邊，此件為1966年由臺灣銀行撥交",
+      "source_image_url": "http://data-service/api/collection/image/MOCCOLLECTIONS?uid=14000128171",
+      "image_license": "CC BY 3.0 TW，保留署名与来源",
+      "image_status": "source-only: ConnectionError",
+      "source_url": "https://tcmb.culture.tw/zh-tw/detail?id=14000128171&indexCode=MOCCOLLECTIONS"
+    },
+    {
+      "name": "福建官局造光绪元宝库平七分二厘",
+      "category": "福建银元",
+      "period": "1900-1908",
+      "source": "国家文化记忆库·国立历史博物馆",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=14000128030&indexCode=MOCCOLLECTIONS",
+      "license": "CC BY 3.0 TW，保留署名与来源",
+      "page_title": "福建官局造光緒元寶庫平七分二釐｜國家文化記憶庫",
+      "features": "國立歷史博物館藏《福建官局造光緒元寶庫平七分二釐》（館藏編號25362），幣面珠圈內有「光緒元寶」漢滿文對讀，珠圈外上環「福建官局造」，下環「庫平七分二釐」，兩側各飾一圓點，錢背受損模糊，中央應為一正面蟠龍圖案，上下應環有「FOO-KIEN PROVINCE」、「7.2 CANDAREENS」英文字",
+      "source_image_url": "http://data-service/api/collection/image/MOCCOLLECTIONS?uid=14000128030",
+      "image_license": "CC BY 3.0 TW，保留署名与来源",
+      "image_status": "source-only: ConnectionError",
+      "source_url": "https://tcmb.culture.tw/zh-tw/detail?id=14000128030&indexCode=MOCCOLLECTIONS"
+    },
+    {
+      "name": "福建官局造光绪元宝库平一钱四分四厘",
+      "category": "福建银元",
+      "period": "1900-1908",
+      "source": "国家文化记忆库·国立历史博物馆",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=14000113490&indexCode=MOCCOLLECTIONS",
+      "license": "CC BY 3.0 TW，保留署名与来源",
+      "page_title": "福建官局造光緒元寶庫平一錢四分四厘｜國家文化記憶庫",
+      "features": "國立歷史博物館藏《福建官局造光緒元寶庫平一錢四分四厘》（館藏編號10814），幣面珠圈內有「光緒元寶」漢滿文對讀，上環為「福建官局造」，下環為幣值「庫平一錢四分四釐」，錢背中央為一正面蟠龍，上環為英文「FOO-KILN PROVINCE」，下環為「1 MACE AND 4.4 CANDAREENS」",
+      "source_image_url": "http://data-service/api/collection/image/MOCCOLLECTIONS?uid=14000113490",
+      "image_license": "CC BY 3.0 TW，保留署名与来源",
+      "image_status": "source-only: ConnectionError",
+      "source_url": "https://tcmb.culture.tw/zh-tw/detail?id=14000113490&indexCode=MOCCOLLECTIONS"
+    },
+    {
+      "name": "福建省造光绪元宝库平七分二厘",
+      "category": "福建银元",
+      "period": "1890-1908",
+      "source": "国家文化记忆库·国立历史博物馆",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=14000128036&indexCode=MOCCOLLECTIONS",
+      "license": "CC BY 3.0 TW，保留署名与来源",
+      "page_title": "福建省造光緒元寶庫平七分二釐｜國家文化記憶庫",
+      "features": "國立歷史博物館藏《福建省造光緒元寶庫平七分二釐》（館藏編號25368），幣面珠圈內有「光緒元寶」漢滿文對讀，珠圈外上環「福建省造」，下環「庫平七分二釐」，兩側各飾四瓣花圖案，錢背受損模糊，中央應為一正面蟠龍圖案，上下應環有「FOO-KIEN PROVINCE」、「7.2 CANDAREENS」英文字",
+      "source_image_url": "http://data-service/api/collection/image/MOCCOLLECTIONS?uid=14000128036",
+      "image_license": "CC BY 3.0 TW，保留署名与来源",
+      "image_status": "source-only: ConnectionError",
+      "source_url": "https://tcmb.culture.tw/zh-tw/detail?id=14000128036&indexCode=MOCCOLLECTIONS"
+    },
+    {
+      "name": "福建闽海关纹龙铜元",
+      "category": "福建铜元",
+      "period": "1900-1905",
+      "source": "国家文化记忆库",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=142000000075&indexCode=MOCCOLLECTIONS",
+      "license": "以来源页授权标示为准；未确认时只保留来源",
+      "page_title": "福建閩海關紋龍銅元｜國家文化記憶庫",
+      "features": "此件外觀為圓形無孔，材質為銅，直徑約2.8公分，底色為金黃色，部分有紅色氧化物覆蓋。銅元正反面皆由2個同心圓構成，內圍皆為珠圈；正面珠圈外圍上方鐫有「福建官局造」，兩側為「閩」、「關」二字，下方為「每枚當錢十文」字樣；珠圈內署有「光緒元寶」四字，其中央文字為滿文「寶福」。背面珠圈外圍上方有「F. K",
+      "source_image_url": "http://data-service/api/collection/image/MOCCOLLECTIONS?uid=142000000075",
+      "image_license": "以来源页授权标示为准；未确认时只保留来源",
+      "image_status": "source-only",
+      "source_url": "https://tcmb.culture.tw/zh-tw/detail?id=142000000075&indexCode=MOCCOLLECTIONS"
     }
   ]
 }
