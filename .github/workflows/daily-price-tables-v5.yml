@@ -1,6 +1,8 @@
 name: 洪盛集藏网每日钱币成交求购价格表 V5
 
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: '20 8 * * *'
       timezone: 'Asia/Shanghai'
