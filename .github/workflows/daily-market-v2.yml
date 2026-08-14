@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: hongsheng-daily-market-main
+  group: coin-ai-daily-main
   cancel-in-progress: false
 
 jobs:
