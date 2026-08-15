@@ -1,7 +1,38 @@
 {
-  "updated_at": "",
+  "updated_at": "2026-08-15 15:45:56",
   "status": "waiting_for_verified_sources",
   "records": [],
-  "sources": [],
-  "notice": "仅整理公开可核验的回收、收购、成交或求购信息；没有真实数据时不编造价格。"
+  "sources": [
+    {
+      "name": "一尘网",
+      "url": "http://www.pm001.net/",
+      "status": "reachable"
+    },
+    {
+      "name": "一尘网",
+      "url": "http://www1.pm001.net/",
+      "status": "reachable"
+    },
+    {
+      "name": "一尘网",
+      "url": "http://www2.pm001.net/",
+      "status": "reachable"
+    },
+    {
+      "name": "一尘网",
+      "url": "http://www3.pm001.net/",
+      "status": "reachable"
+    },
+    {
+      "name": "钱币天堂",
+      "url": "https://www.yy11.com/c2c/forum/4.html",
+      "status": "reachable"
+    },
+    {
+      "name": "钱币天堂",
+      "url": "https://yy11.com/c2c/forum/4.html",
+      "status": "reachable"
+    }
+  ],
+  "notice": "本站只整理公开可核验信息；没有真实记录时不编造价格。"
 }
