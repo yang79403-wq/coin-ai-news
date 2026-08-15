@@ -1,0 +1,44 @@
+name: 福建钱币资料自动收集整理 V2
+on:
+  schedule:
+    - cron: '35 1 * * *'
+      timezone: 'Asia/Shanghai'
+    - cron: '35 13 * * *'
+      timezone: 'Asia/Shanghai'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fujian-archive-v2-main
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: 收集福建钱币资料与图片索引
+        run: python fujian_archive_collect_v2.py
+      - name: 校验资料库
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data/fujian-coins.json',encoding='utf-8'))
+          assert d.get('records'), '资料库为空'
+          assert not any('价格' in str(x) or '求购' in str(x) for x in d.get('records',[])), '福建资料库不得混入行情'
+          print('records:',len(d['records']))
+          print('image-index:',sum(x.get('image_count',0) for x in d['records']))
+          PY
+      - name: 提交资料更新
+        run: |
+          git config user.name '洪盛集藏网'
+          git config user.email 'actions@github.com'
+          git add data/fujian-coins.json
+          git diff --cached --quiet || git commit -m '每日更新：福建钱币资料与图片索引'
+          git pull --rebase --autostash origin main
+          git push origin main
