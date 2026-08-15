@@ -1,30 +1,21 @@
-name: 洪盛集藏｜每日自动采集并部署
+name: 洪盛集藏｜GitHub Pages 基础部署
 
 on:
-  schedule:
-    - cron: '30 7 * * *'
-      timezone: 'Asia/Shanghai'
-    - cron: '30 13 * * *'
-      timezone: 'Asia/Shanghai'
-    - cron: '30 19 * * *'
-      timezone: 'Asia/Shanghai'
-  workflow_dispatch:
   push:
     branches: [main]
-    paths-ignore:
-      - 'data/**'
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: hongsheng-site
-  cancel-in-progress: false
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
-  update-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -32,45 +23,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: python -m pip install --disable-pip-version-check requests beautifulsoup4
-
-      - name: Run stable collector
-        run: python collector.py
-
-      - name: Validate generated data
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          for name in ('market','fujian'):
-              p=Path('data')/(name+'.json')
-              d=json.loads(p.read_text(encoding='utf-8'))
-              assert isinstance(d.get('records'), list), name
-              print(name, 'records=', len(d['records']))
-          PY
-
-      - name: Persist data safely
-        run: |
-          git config user.name '洪盛集藏自动机器人'
-          git config user.email 'actions@github.com'
-          git add data/market.json data/fujian.json
-          if git diff --cached --quiet; then
-            echo '没有新的数据变化'
-          else
-            git pull --rebase --autostash origin main
-            git add data/market.json data/fujian.json
-            git diff --cached --quiet || git commit -m 'data: 自动更新钱币资料与行情 [skip ci]'
-            git push origin main
-          fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
