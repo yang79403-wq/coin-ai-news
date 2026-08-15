@@ -1,0 +1,82 @@
+name: 洪盛集藏｜唯一自动更新
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 0 * * *'
+      timezone: 'Asia/Shanghai'
+    - cron: '17 6 * * *'
+      timezone: 'Asia/Shanghai'
+    - cron: '17 12 * * *'
+      timezone: 'Asia/Shanghai'
+    - cron: '17 18 * * *'
+      timezone: 'Asia/Shanghai'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: hongsheng-site-main
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 拉取最新代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装采集依赖
+        run: pip install requests beautifulsoup4
+
+      - name: 运行唯一数据采集器
+        run: python collector.py
+
+      - name: 严格验证数据文件
+        run: |
+          python -m py_compile collector.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for f in ['data/market.json','data/fujian.json']:
+              d=json.loads(Path(f).read_text(encoding='utf-8'))
+              assert isinstance(d,dict)
+              assert isinstance(d.get('records'),list)
+              print(f, 'OK:', len(d['records']))
+          PY
+
+      - name: 保存自动采集数据
+        run: |
+          git config user.name '洪盛集藏网自动机器人'
+          git config user.email 'actions@github.com'
+          git add data/market.json data/fujian.json
+          if git diff --cached --quiet; then
+            echo '没有新的数据变化，不提交。'
+          else
+            git commit -m 'data: daily market and Fujian archive update [skip ci]'
+            git push origin main
+          fi
+
+      - name: 配置 GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 构建网站
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: 发布网站
+        id: deployment
+        uses: actions/deploy-pages@v4
