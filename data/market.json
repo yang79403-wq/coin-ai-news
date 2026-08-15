@@ -1,28 +1,6 @@
 {
-  "updated": "2026-08-15 05:14:25",
-  "sources": [
-    "一尘网",
-    "钱币天堂"
-  ],
-  "stats": [
-    {
-      "source": "一尘网",
-      "pages": 1,
-      "records": 0,
-      "status": "ok"
-    },
-    {
-      "source": "一尘网备用",
-      "pages": 1,
-      "records": 0,
-      "status": "ok"
-    },
-    {
-      "source": "钱币天堂",
-      "pages": 1,
-      "records": 0,
-      "status": "ok"
-    }
-  ],
+  "updated": "2026-08-15",
+  "sources": ["一尘网", "钱币天堂"],
+  "stats": [],
   "records": []
 }
