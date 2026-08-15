@@ -1,6 +1,8 @@
 name: 洪盛集藏｜唯一自动更新
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: '17 0 * * *'
