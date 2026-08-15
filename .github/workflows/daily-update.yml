@@ -1,0 +1,28 @@
+name: 洪盛集藏每日自动更新
+on:
+  schedule:
+    - cron: '10 8 * * *'
+      timezone: 'Asia/Shanghai'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: site-update-main
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 更新站点状态
+        run: python daily_update.py
+      - name: 提交更新
+        run: |
+          git config user.name '洪盛集藏自动机器人'
+          git config user.email 'actions@github.com'
+          git add data/status.json
+          git diff --cached --quiet || git commit -m 'chore: daily site heartbeat'
+          git push origin main
