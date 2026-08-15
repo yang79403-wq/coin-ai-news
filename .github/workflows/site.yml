@@ -6,9 +6,13 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '30 1 * * *'
+      timezone: 'Asia/Shanghai'
     - cron: '30 7 * * *'
+      timezone: 'Asia/Shanghai'
     - cron: '30 13 * * *'
+      timezone: 'Asia/Shanghai'
     - cron: '30 19 * * *'
+      timezone: 'Asia/Shanghai'
 
 permissions:
   contents: read
@@ -36,17 +40,26 @@ jobs:
         run: pip install --disable-pip-version-check requests beautifulsoup4
       - name: Collect fresh data
         run: python collector.py
-      - name: Validate site
+      - name: Validate data and internal links
         run: |
           python -m py_compile collector.py
           python - <<'PY'
-          import json
+          import json,re
           from pathlib import Path
           for f in ('data/market.json','data/fujian.json'):
               d=json.loads(Path(f).read_text(encoding='utf-8'))
               assert isinstance(d.get('records'),list), f'{f}: records must be list'
               print(f, 'records=',len(d['records']), 'updated=',d.get('updated_at'))
           assert Path('index.html').exists(), 'index.html missing'
+          html=Path('index.html').read_text(encoding='utf-8')
+          links=re.findall(r'''(?:href|src)=["']([^"'#?]+)''',html,re.I)
+          bad=[]
+          for link in links:
+              if link.startswith(('http://','https://','mailto:','tel:','javascript:')): continue
+              p=(Path('index.html').parent/link).resolve()
+              if not p.exists(): bad.append(link)
+          assert not bad, 'Broken internal links: '+', '.join(bad)
+          print('internal links OK:', len(links))
           PY
       - name: Configure Pages
         uses: actions/configure-pages@v5
