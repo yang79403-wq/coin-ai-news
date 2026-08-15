@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://yang79403-wq.github.io/coin-ai-news/sitemap.xml
