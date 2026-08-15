@@ -1,15 +1,6 @@
-const grid=document.getElementById('marketGrid');
-const updated=document.getElementById('updated');
-function money(v){return v==null?'待接入':('¥'+Number(v).toLocaleString('zh-CN',{maximumFractionDigits:2}))}
-async function load(cat=''){
-  grid.innerHTML='<div class="muted">正在加载行情…</div>';
-  const url='/api/prices'+(cat?'?category='+encodeURIComponent(cat):'');
-  try{
-    const res=await fetch(url); const data=await res.json();
-    if(!data.length){grid.innerHTML='<div class="muted">暂无该分类数据，等待自动采集。</div>';return}
-    grid.innerHTML=data.map(x=>`<article class="market"><div class="name">${x.name}</div><div class="price">${money(x.price)}</div><div class="${x.change_pct>0?'up':''}">${x.price==null?'市场参考价待更新':(x.change_pct>0?'↑ ':'')+x.change_pct+'%'}</div><div class="source">${x.source||'数据源'} · ${x.captured_at||''}</div></article>`).join('');
-    updated.textContent='数据状态：自动化行情接口已连接';
-  }catch(e){grid.innerHTML='<div class="muted">行情接口暂不可用，请稍后刷新。</div>';updated.textContent='数据接口离线';}
-}
-document.querySelectorAll('.filters button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');load(btn.dataset.cat);}));
-load();
+async function loadJson(path){try{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return await r.json()}catch(e){return null}}
+function esc(v){return String(v??'').replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\\':'&#92;','"':'&quot;'}[m]))}
+function escAttr(v){return esc(v).replace(/'/g,'&#39;')}
+function renderMarket(data){const box=document.getElementById('marketTables');if(!data||!Array.isArray(data.tables)||!data.tables.length){box.innerHTML='<div class="empty">今日暂无经核验成交/求购数据。机器人会在下一次采集后自动更新。</div>';return}document.getElementById('marketDate').textContent=data.updated_at||'每日更新';box.innerHTML=data.tables.map(t=>`<div class="table-wrap"><h3>${esc(t.title||t.category||'行情')}</h3><table class="table"><thead><tr><th>品种</th><th>版别</th><th>品相</th><th>成交价</th><th>求购价</th><th>日期</th><th>来源</th></tr></thead><tbody>${(t.rows||[]).map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.variant)}</td><td>${esc(x.condition)}</td><td>${esc(x.deal_price)}</td><td>${esc(x.buy_price)}</td><td>${esc(x.date)}</td><td>${x.source_url?`<a class="source" href="${escAttr(x.source_url)}" target="_blank" rel="noopener">${esc(x.source||'来源')}</a>`:esc(x.source||'')}</td></tr>`).join('')}</tbody></table></div>`).join('')}
+function renderSearch(data,q){const el=document.getElementById('searchResult');if(!q){el.textContent='输入关键词搜索本站资料。';return}const all=[];if(data?.tables)for(const t of data.tables)for(const x of t.rows||[])all.push({...x,category:t.category||t.title});if(data?.fujian?.records)for(const x of data.fujian.records)all.push({...x,category:x.category||'福建钱币资料'});const hits=all.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q.toLowerCase())).slice(0,30);el.innerHTML=hits.length?hits.map(x=>`<div class="result-item"><b>${esc(x.name)}</b><br><span class="muted">${esc(x.category||'')}　${esc(x.variant||x.period||'')}　${esc(x.deal_price||'')}</span></div>`).join(''):'<div class="empty">没有找到本站资料。</div>'}
+(async()=>{const [market,fujian]=await Promise.all([loadJson('data/price-tables.json'),loadJson('data/fujian-coins.json')]);if(market)renderMarket(market);else renderMarket(null);window.__siteData={...(market||{}),fujian};document.getElementById('searchBtn').onclick=()=>renderSearch(window.__siteData,document.getElementById('q').value.trim());document.getElementById('q').onkeydown=e=>{if(e.key==='Enter')document.getElementById('searchBtn').click()};})();
